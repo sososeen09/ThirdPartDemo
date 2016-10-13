@@ -12,6 +12,11 @@
               tools:context="com.longge.thirdpartdemo.eventbus.EventBusActivity">
 
     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="基本类型事件" />
+
+    <TextView
         android:id="@+id/tv_showMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -34,6 +39,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
+        android:layout_marginTop="10dp"
         android:background="#66666666" />
 
     <TextView
@@ -53,4 +59,38 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="sendCustomEvent" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:background="#66666666" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="线程" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_sendOnMainThread"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="在主线程发送" />
+
+        <Button
+            android:id="@+id/btn_sendOnSonThread"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="在子线程发送" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_showThreadResult"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 </LinearLayout>

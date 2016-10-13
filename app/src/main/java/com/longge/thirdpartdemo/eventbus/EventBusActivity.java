@@ -2,8 +2,10 @@ package com.longge.thirdpartdemo.eventbus;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.longge.thirdpartdemo.R;
@@ -29,6 +31,15 @@ public class EventBusActivity extends AppCompatActivity {
     TextView mTvShowCustomEventMsg;
     @BindView(R.id.btn_sendCustomEvent)
     Button mBtnSendCustomEvent;
+    @BindView(R.id.btn_sendOnMainThread)
+    Button mBtnSendOnMainThread;
+    @BindView(R.id.btn_sendOnSonThread)
+    Button mBtnSendOnSonThread;
+    @BindView(R.id.tv_showThreadResult)
+    TextView mTvShowThreadResult;
+    @BindView(R.id.activity_event_bus)
+    LinearLayout mActivityEventBus;
+    private StringBuilder mSB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +48,7 @@ public class EventBusActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         //在onCreate的时候注册
         EventBus.getDefault().register(this);
+
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -49,7 +61,7 @@ public class EventBusActivity extends AppCompatActivity {
         mTvShowCustomEventMsg.setText(messageEvent.msg);
     }
 
-    @OnClick({R.id.btn_send, R.id.btn_startAct, R.id.btn_sendCustomEvent})
+    @OnClick({R.id.btn_send, R.id.btn_startAct, R.id.btn_sendCustomEvent, R.id.btn_sendOnMainThread, R.id.btn_sendOnSonThread})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_send:
@@ -61,7 +73,55 @@ public class EventBusActivity extends AppCompatActivity {
             case R.id.btn_sendCustomEvent:
                 EventBus.getDefault().post(new MessageEvent("本页中发出的自定义事件的消息"));
                 break;
+            case R.id.btn_sendOnMainThread:
+                mSB = new StringBuilder();
+                EventBus.getDefault().post("send from MainThread: ");
+                break;
+            case R.id.btn_sendOnSonThread:
+                mSB = new StringBuilder();
+                sonThread();
+                break;
         }
+    }
+
+    public void sonThread() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                EventBus.getDefault().post("send from SonThread: ");
+            }
+        }).start();
+    }
+
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventMain(String message) {
+        //只有public方法才能收到事件
+        mSB.append(message).append("main").append(Thread.currentThread().getName()).append("\n");
+//        mTvShowThreadResult.setText(mSB.toString());
+        Log.d(message, "onEventMain: " + Thread.currentThread().getName());
+    }
+
+    @Subscribe(threadMode = ThreadMode.POSTING)
+    public void onEventPosting(String message) {
+        mSB.append(message).append("posting").append(Thread.currentThread().getName()).append("\n");
+//        mTvShowThreadResult.setText(mSB.toString());
+        Log.d(message, "onEventPosting: " + Thread.currentThread().getName());
+    }
+
+
+    @Subscribe(threadMode = ThreadMode.BACKGROUND)
+    public void onEventBackground(String message) {
+        mSB.append(message).append("background").append(Thread.currentThread().getName()).append("\n");
+//        mTvShowThreadResult.setText(mSB.toString());
+        Log.d(message, "onEventBackground: " + Thread.currentThread().getName());
+    }
+
+    @Subscribe(threadMode = ThreadMode.ASYNC)
+    public void onEventAsync(String message) {
+        mSB.append(message).append("async").append(Thread.currentThread().getName()).append("\n");
+//        mTvShowThreadResult.setText(mSB.toString());
+        Log.d(message, "onEventAsync: " + Thread.currentThread().getName());
     }
 
     @Override
