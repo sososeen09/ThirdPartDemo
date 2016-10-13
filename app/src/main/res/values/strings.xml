@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">ThirdPartDemo</string>
+    <string name="send_message_to_first">send Message To First</string>
 </resources>

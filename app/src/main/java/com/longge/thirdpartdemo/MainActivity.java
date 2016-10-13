@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
+import com.longge.thirdpartdemo.eventbus.EventBusActivity;
 import com.longge.thirdpartdemo.util.IntentHelper;
 
 import butterknife.BindView;

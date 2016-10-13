@@ -15,8 +15,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".EventBusActivity" />
-        <activity android:name=".GreenDaoActivity"></activity>
+
+        <!--EventBus-->
+        <activity
+            android:name=".eventbus.EventBusActivity"
+            android:label="EventBus" />
+        <activity
+            android:name=".eventbus.EventBus2Activity"
+            android:label="EventBus2" />
+
+
+        <!--greenDao-->
+        <activity
+            android:name=".GreenDaoActivity"
+            android:label="GreenDao" />
     </application>
 
 </manifest>
