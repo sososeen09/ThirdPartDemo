@@ -27,6 +27,7 @@
     <Button
         android:id="@+id/btn_send"
         android:layout_width="wrap_content"
+        android:textAllCaps="false"
         android:layout_height="wrap_content"
         android:text="sendMessage" />
 
@@ -34,6 +35,7 @@
         android:id="@+id/btn_startAct"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textAllCaps="false"
         android:text="StartNewAct" />
 
     <View
@@ -58,6 +60,7 @@
         android:id="@+id/btn_sendCustomEvent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textAllCaps="false"
         android:text="sendCustomEvent" />
 
     <View
@@ -80,12 +83,14 @@
             android:id="@+id/btn_sendOnMainThread"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textAllCaps="false"
             android:text="在主线程发送" />
 
         <Button
             android:id="@+id/btn_sendOnSonThread"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textAllCaps="false"
             android:text="在子线程发送" />
     </LinearLayout>
 

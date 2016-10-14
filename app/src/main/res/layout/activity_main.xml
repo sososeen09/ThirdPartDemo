@@ -15,10 +15,13 @@
         android:id="@+id/btn_eventBus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="EventBus" />
+        android:text="EventBus"
+        android:textAllCaps="false" />
+
     <Button
         android:id="@+id/btn_greenDAO"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="greenDAO" />
+        android:text="greenDAO"
+        android:textAllCaps="false" />
 </LinearLayout>
