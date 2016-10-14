@@ -40,6 +40,7 @@ public class EventBus2Activity extends AppCompatActivity {
     @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
     public void onStickyEvent(NewActivityEvent newActivityEvent) {
         mTvShowMessage.setText(newActivityEvent.msg);
+
     }
 
     @Override
@@ -52,5 +53,22 @@ public class EventBus2Activity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
+        //这个粘性事件如果不删除掉，会一直保存在内存中，所以最好删除掉
+//        getAndRemove();
+        remove();
+    }
+
+    private void remove() {
+        NewActivityEvent newActivityEvent = EventBus.getDefault().removeStickyEvent(NewActivityEvent.class);
+        if (newActivityEvent != null) {
+
+        }
+    }
+
+    private void getAndRemove() {
+        NewActivityEvent stickyEvent = EventBus.getDefault().getStickyEvent(NewActivityEvent.class);
+        if (stickyEvent != null) {
+            EventBus.getDefault().removeStickyEvent(stickyEvent);
+        }
     }
 }

@@ -88,7 +88,7 @@ public class EventBusActivity extends AppCompatActivity {
 
             case R.id.btn_sendSticky:
                 IntentHelper.startAct(this, EventBus2Activity.class);
-                EventBus.getDefault().postSticky(new NewActivityEvent("从第一个Activity中发送的Sticky数据"));
+                EventBus.getDefault().postSticky(new NewActivityEvent("从第一个Activity中发送的Sticky数据，\n这个粘性事件如果不删除掉，会一直保存在内存中，所以最好删除掉"));
                 break;
         }
     }
