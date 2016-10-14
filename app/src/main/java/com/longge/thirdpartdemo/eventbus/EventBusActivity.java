@@ -9,6 +9,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.longge.thirdpartdemo.R;
+import com.longge.thirdpartdemo.eventbus.event.MessageEvent;
+import com.longge.thirdpartdemo.eventbus.event.NewActivityEvent;
 import com.longge.thirdpartdemo.util.IntentHelper;
 
 import org.greenrobot.eventbus.EventBus;
@@ -39,6 +41,8 @@ public class EventBusActivity extends AppCompatActivity {
     TextView mTvShowThreadResult;
     @BindView(R.id.activity_event_bus)
     LinearLayout mActivityEventBus;
+    @BindView(R.id.btn_sendSticky)
+    Button mBtnSendSticky;
     private StringBuilder mSB;
 
     @Override
@@ -61,7 +65,7 @@ public class EventBusActivity extends AppCompatActivity {
         mTvShowCustomEventMsg.setText(messageEvent.msg);
     }
 
-    @OnClick({R.id.btn_send, R.id.btn_startAct, R.id.btn_sendCustomEvent, R.id.btn_sendOnMainThread, R.id.btn_sendOnSonThread})
+    @OnClick({R.id.btn_send, R.id.btn_startAct, R.id.btn_sendCustomEvent, R.id.btn_sendOnMainThread, R.id.btn_sendOnSonThread, R.id.btn_sendSticky})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_send:
@@ -80,6 +84,11 @@ public class EventBusActivity extends AppCompatActivity {
             case R.id.btn_sendOnSonThread:
                 mSB = new StringBuilder();
                 sonThread();
+                break;
+
+            case R.id.btn_sendSticky:
+                IntentHelper.startAct(this, EventBus2Activity.class);
+                EventBus.getDefault().postSticky(new NewActivityEvent("从第一个Activity中发送的Sticky数据"));
                 break;
         }
     }

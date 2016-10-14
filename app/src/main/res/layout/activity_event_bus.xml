@@ -27,16 +27,16 @@
     <Button
         android:id="@+id/btn_send"
         android:layout_width="wrap_content"
-        android:textAllCaps="false"
         android:layout_height="wrap_content"
-        android:text="sendMessage" />
+        android:text="sendMessage"
+        android:textAllCaps="false" />
 
     <Button
         android:id="@+id/btn_startAct"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAllCaps="false"
-        android:text="StartNewAct" />
+        android:text="StartNewAct"
+        android:textAllCaps="false" />
 
     <View
         android:layout_width="match_parent"
@@ -60,8 +60,8 @@
         android:id="@+id/btn_sendCustomEvent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAllCaps="false"
-        android:text="sendCustomEvent" />
+        android:text="sendCustomEvent"
+        android:textAllCaps="false" />
 
     <View
         android:layout_width="match_parent"
@@ -83,19 +83,33 @@
             android:id="@+id/btn_sendOnMainThread"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAllCaps="false"
-            android:text="在主线程发送" />
+            android:text="在主线程发送"
+            android:textAllCaps="false" />
 
         <Button
             android:id="@+id/btn_sendOnSonThread"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAllCaps="false"
-            android:text="在子线程发送" />
+            android:text="在子线程发送"
+            android:textAllCaps="false" />
     </LinearLayout>
 
     <TextView
         android:id="@+id/tv_showThreadResult"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:background="#66666666" />
+
+    <Button
+        android:id="@+id/btn_sendSticky"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sticky启动Activity"
+        android:textAllCaps="false" />
+
 </LinearLayout>
