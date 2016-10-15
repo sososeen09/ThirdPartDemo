@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.longge.thirdpartdemo.R;
 import com.longge.thirdpartdemo.eventbus.event.MessageEvent;
 import com.longge.thirdpartdemo.eventbus.event.NewActivityEvent;
+import com.longge.thirdpartdemo.eventbus.event.PriorityEvent;
 import com.longge.thirdpartdemo.util.IntentHelper;
 
 import org.greenrobot.eventbus.EventBus;
@@ -43,7 +44,14 @@ public class EventBusActivity extends AppCompatActivity {
     LinearLayout mActivityEventBus;
     @BindView(R.id.btn_sendSticky)
     Button mBtnSendSticky;
+    @BindView(R.id.btn_sendPriority)
+    Button mBtnSendPriority;
+    @BindView(R.id.btn_sendPriorityWithCancel)
+    Button mBtnSendPriorityWithCancel;
+    @BindView(R.id.tv_showPriorityResult)
+    TextView mTvShowPriorityResult;
     private StringBuilder mSB;
+    private StringBuilder mSbPriority;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +73,10 @@ public class EventBusActivity extends AppCompatActivity {
         mTvShowCustomEventMsg.setText(messageEvent.msg);
     }
 
-    @OnClick({R.id.btn_send, R.id.btn_startAct, R.id.btn_sendCustomEvent, R.id.btn_sendOnMainThread, R.id.btn_sendOnSonThread, R.id.btn_sendSticky})
+    @OnClick({R.id.btn_send, R.id.btn_startAct, R.id.btn_sendCustomEvent, R.id.btn_sendOnMainThread, R.id.btn_sendOnSonThread, R.id.btn_sendSticky
+            , R.id.btn_sendPriority,
+            R.id.btn_sendPriorityWithCancel
+    })
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_send:
@@ -89,6 +100,17 @@ public class EventBusActivity extends AppCompatActivity {
             case R.id.btn_sendSticky:
                 IntentHelper.startAct(this, EventBus2Activity.class);
                 EventBus.getDefault().postSticky(new NewActivityEvent("从第一个Activity中发送的Sticky数据，\n这个粘性事件如果不删除掉，会一直保存在内存中，所以最好删除掉"));
+                break;
+
+            case R.id.btn_sendPriority:
+                //优先级
+                mSbPriority = new StringBuilder();
+                EventBus.getDefault().post(new PriorityEvent());
+                break;
+            case R.id.btn_sendPriorityWithCancel:
+                //高优先级打断低优先级消息传送
+                mSbPriority = new StringBuilder();
+                EventBus.getDefault().post(new PriorityEvent(1));
                 break;
         }
     }
@@ -133,8 +155,38 @@ public class EventBusActivity extends AppCompatActivity {
         Log.d(message, "onEventAsync: " + Thread.currentThread().getName());
     }
 
+
+    @Subscribe(priority = 2)
+    public void onPriority2(PriorityEvent priorityEvent) {
+        mSbPriority.append("收到消息 priority: " + 2 + "\n");
+        mTvShowPriorityResult.setText(mSbPriority.toString());
+        if (priorityEvent.cancelIndex == 2) {
+            EventBus.getDefault().cancelEventDelivery(priorityEvent);
+        }
+    }
+
+    @Subscribe(priority = 1,threadMode = ThreadMode.POSTING)
+    public void onPriority1(PriorityEvent priorityEvent) {
+        mSbPriority.append("收到消息 priority: " + 1 + "\n");
+        mTvShowPriorityResult.setText(mSbPriority.toString());
+        if (priorityEvent.cancelIndex == 1) {
+            EventBus.getDefault().cancelEventDelivery(priorityEvent);
+        }
+    }
+
+    @Subscribe()
+    public void onPriorityDefault(PriorityEvent priorityEvent) {
+        mSbPriority.append("收到消息 priority: " + 0 + "\n");
+        mTvShowPriorityResult.setText(mSbPriority.toString());
+        if (priorityEvent.cancelIndex == 0) {
+            EventBus.getDefault().cancelEventDelivery(priorityEvent);
+        }
+    }
+
+
     @Override
     protected void onDestroy() {
+
         super.onDestroy();
         //活动销毁的时候取消注册
         EventBus.getDefault().unregister(this);
