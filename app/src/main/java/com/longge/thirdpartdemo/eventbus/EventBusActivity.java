@@ -5,10 +5,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.longge.thirdpartdemo.R;
+import com.longge.thirdpartdemo.eventbus.event.LogEvent;
 import com.longge.thirdpartdemo.eventbus.event.MessageEvent;
 import com.longge.thirdpartdemo.eventbus.event.NewActivityEvent;
 import com.longge.thirdpartdemo.eventbus.event.PriorityEvent;
@@ -40,8 +40,7 @@ public class EventBusActivity extends AppCompatActivity {
     Button mBtnSendOnSonThread;
     @BindView(R.id.tv_showThreadResult)
     TextView mTvShowThreadResult;
-    @BindView(R.id.activity_event_bus)
-    LinearLayout mActivityEventBus;
+
     @BindView(R.id.btn_sendSticky)
     Button mBtnSendSticky;
     @BindView(R.id.btn_sendPriority)
@@ -50,7 +49,7 @@ public class EventBusActivity extends AppCompatActivity {
     Button mBtnSendPriorityWithCancel;
     @BindView(R.id.tv_showPriorityResult)
     TextView mTvShowPriorityResult;
-    private StringBuilder mSB;
+    private StringBuilder mSBThreadResult;
     private StringBuilder mSbPriority;
 
     @Override
@@ -89,11 +88,11 @@ public class EventBusActivity extends AppCompatActivity {
                 EventBus.getDefault().post(new MessageEvent("本页中发出的自定义事件的消息"));
                 break;
             case R.id.btn_sendOnMainThread:
-                mSB = new StringBuilder();
+                mSBThreadResult = new StringBuilder();
                 EventBus.getDefault().post("send from MainThread: ");
                 break;
             case R.id.btn_sendOnSonThread:
-                mSB = new StringBuilder();
+                mSBThreadResult = new StringBuilder();
                 sonThread();
                 break;
 
@@ -128,31 +127,37 @@ public class EventBusActivity extends AppCompatActivity {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMain(String message) {
         //只有public方法才能收到事件
-        mSB.append(message).append("main").append(Thread.currentThread().getName()).append("\n");
-//        mTvShowThreadResult.setText(mSB.toString());
+        mSBThreadResult.append(message).append("main").append(Thread.currentThread().getName()).append("\n");
         Log.d(message, "onEventMain: " + Thread.currentThread().getName());
+        EventBus.getDefault().post(new LogEvent());
     }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onLogEvent(LogEvent logEvent) {
+        mTvShowThreadResult.setText(mSBThreadResult.toString());
+    }
+
 
     @Subscribe(threadMode = ThreadMode.POSTING)
     public void onEventPosting(String message) {
-        mSB.append(message).append("posting").append(Thread.currentThread().getName()).append("\n");
-//        mTvShowThreadResult.setText(mSB.toString());
+        mSBThreadResult.append(message).append("posting").append(Thread.currentThread().getName()).append("\n");
         Log.d(message, "onEventPosting: " + Thread.currentThread().getName());
+        EventBus.getDefault().post(new LogEvent());
     }
 
 
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
     public void onEventBackground(String message) {
-        mSB.append(message).append("background").append(Thread.currentThread().getName()).append("\n");
-//        mTvShowThreadResult.setText(mSB.toString());
+        mSBThreadResult.append(message).append("background").append(Thread.currentThread().getName()).append("\n");
         Log.d(message, "onEventBackground: " + Thread.currentThread().getName());
+        EventBus.getDefault().post(new LogEvent());
     }
 
     @Subscribe(threadMode = ThreadMode.ASYNC)
     public void onEventAsync(String message) {
-        mSB.append(message).append("async").append(Thread.currentThread().getName()).append("\n");
-//        mTvShowThreadResult.setText(mSB.toString());
+        mSBThreadResult.append(message).append("async").append(Thread.currentThread().getName()).append("\n");
         Log.d(message, "onEventAsync: " + Thread.currentThread().getName());
+        EventBus.getDefault().post(new LogEvent());
     }
 
 
