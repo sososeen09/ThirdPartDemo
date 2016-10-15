@@ -65,6 +65,7 @@ public class EventBusActivity extends AppCompatActivity {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onSendMessage(String message) {
         mTvShowMessage.setText(message);
+        Log.d(message, "onSendMessageInMain: " + Thread.currentThread().getName() + "  time: "+System.currentTimeMillis());
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN, priority = 1, sticky = true)
@@ -89,7 +90,7 @@ public class EventBusActivity extends AppCompatActivity {
                 break;
             case R.id.btn_sendOnMainThread:
                 mSBThreadResult = new StringBuilder();
-                EventBus.getDefault().post("send from MainThread: ");
+                EventBus.getDefault().post("post in main,");
                 break;
             case R.id.btn_sendOnSonThread:
                 mSBThreadResult = new StringBuilder();
@@ -118,7 +119,7 @@ public class EventBusActivity extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                EventBus.getDefault().post("send from SonThread: ");
+                EventBus.getDefault().post("post in son,");
             }
         }).start();
     }
@@ -127,8 +128,8 @@ public class EventBusActivity extends AppCompatActivity {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMain(String message) {
         //只有public方法才能收到事件
-        mSBThreadResult.append(message).append("main").append(Thread.currentThread().getName()).append("\n");
-        Log.d(message, "onEventMain: " + Thread.currentThread().getName());
+        mSBThreadResult.append(message).append("onEventMain: ").append(Thread.currentThread().getName()).append("\n");
+        Log.d(message, "onEventMain: " + Thread.currentThread().getName() + "  time: "+System.currentTimeMillis());
         EventBus.getDefault().post(new LogEvent());
     }
 
@@ -140,23 +141,23 @@ public class EventBusActivity extends AppCompatActivity {
 
     @Subscribe(threadMode = ThreadMode.POSTING)
     public void onEventPosting(String message) {
-        mSBThreadResult.append(message).append("posting").append(Thread.currentThread().getName()).append("\n");
-        Log.d(message, "onEventPosting: " + Thread.currentThread().getName());
+        mSBThreadResult.append(message).append("onEventPosting: ").append(Thread.currentThread().getName()).append("\n");
+        Log.d(message, "onEventPosting: " + Thread.currentThread().getName() + "  time: "+System.currentTimeMillis());
         EventBus.getDefault().post(new LogEvent());
     }
 
 
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
     public void onEventBackground(String message) {
-        mSBThreadResult.append(message).append("background").append(Thread.currentThread().getName()).append("\n");
-        Log.d(message, "onEventBackground: " + Thread.currentThread().getName());
+        mSBThreadResult.append(message).append("onEventBackground: ").append(Thread.currentThread().getName()).append("\n");
+        Log.d(message, "onEventBackground: " + Thread.currentThread().getName() + "  time: "+System.currentTimeMillis());
         EventBus.getDefault().post(new LogEvent());
     }
 
     @Subscribe(threadMode = ThreadMode.ASYNC)
     public void onEventAsync(String message) {
-        mSBThreadResult.append(message).append("async").append(Thread.currentThread().getName()).append("\n");
-        Log.d(message, "onEventAsync: " + Thread.currentThread().getName());
+        mSBThreadResult.append(message).append("onEventAsync: ").append(Thread.currentThread().getName()).append("\n");
+        Log.d(message, "onEventAsync: " + Thread.currentThread().getName() + "  time: "+System.currentTimeMillis());
         EventBus.getDefault().post(new LogEvent());
     }
 
