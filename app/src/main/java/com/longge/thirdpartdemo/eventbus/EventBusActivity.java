@@ -65,7 +65,7 @@ public class EventBusActivity extends AppCompatActivity {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onSendMessage(String message) {
         mTvShowMessage.setText(message);
-        Log.d(message, "onSendMessageInMain: " + Thread.currentThread().getName() + "  time: "+System.currentTimeMillis());
+        Log.d(message, "onSendMessageInMain: " + Thread.currentThread().getName() + "  time: " + System.currentTimeMillis());
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN, priority = 1, sticky = true)
@@ -75,7 +75,7 @@ public class EventBusActivity extends AppCompatActivity {
 
     @OnClick({R.id.btn_send, R.id.btn_startAct, R.id.btn_sendCustomEvent, R.id.btn_sendOnMainThread, R.id.btn_sendOnSonThread, R.id.btn_sendSticky
             , R.id.btn_sendPriority,
-            R.id.btn_sendPriorityWithCancel
+            R.id.btn_sendPriorityWithCancel, R.id.btn_stickyMemory
     })
     public void onClick(View view) {
         switch (view.getId()) {
@@ -99,7 +99,10 @@ public class EventBusActivity extends AppCompatActivity {
 
             case R.id.btn_sendSticky:
                 IntentHelper.startAct(this, EventBus2Activity.class);
-                EventBus.getDefault().postSticky(new NewActivityEvent("从第一个Activity中发送的Sticky数据，\n这个粘性事件如果不删除掉，会一直保存在内存中，所以最好删除掉"));
+                EventBus.getDefault().postSticky(new NewActivityEvent("从第一个Activity中发送的Sticky数据，\n内存中会一直保存最后一个sticky事件，不需要时，最好删除掉"));
+                break;
+            case R.id.btn_stickyMemory://
+                IntentHelper.startAct(this, StickyActivity.class);
                 break;
 
             case R.id.btn_sendPriority:
@@ -129,7 +132,7 @@ public class EventBusActivity extends AppCompatActivity {
     public void onEventMain(String message) {
         //只有public方法才能收到事件
         mSBThreadResult.append(message).append("onEventMain: ").append(Thread.currentThread().getName()).append("\n");
-        Log.d(message, "onEventMain: " + Thread.currentThread().getName() + "  time: "+System.currentTimeMillis());
+        Log.d(message, "onEventMain: " + Thread.currentThread().getName() + "  time: " + System.currentTimeMillis());
         EventBus.getDefault().post(new LogEvent());
     }
 
@@ -142,7 +145,7 @@ public class EventBusActivity extends AppCompatActivity {
     @Subscribe(threadMode = ThreadMode.POSTING)
     public void onEventPosting(String message) {
         mSBThreadResult.append(message).append("onEventPosting: ").append(Thread.currentThread().getName()).append("\n");
-        Log.d(message, "onEventPosting: " + Thread.currentThread().getName() + "  time: "+System.currentTimeMillis());
+        Log.d(message, "onEventPosting: " + Thread.currentThread().getName() + "  time: " + System.currentTimeMillis());
         EventBus.getDefault().post(new LogEvent());
     }
 
@@ -150,14 +153,14 @@ public class EventBusActivity extends AppCompatActivity {
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
     public void onEventBackground(String message) {
         mSBThreadResult.append(message).append("onEventBackground: ").append(Thread.currentThread().getName()).append("\n");
-        Log.d(message, "onEventBackground: " + Thread.currentThread().getName() + "  time: "+System.currentTimeMillis());
+        Log.d(message, "onEventBackground: " + Thread.currentThread().getName() + "  time: " + System.currentTimeMillis());
         EventBus.getDefault().post(new LogEvent());
     }
 
     @Subscribe(threadMode = ThreadMode.ASYNC)
     public void onEventAsync(String message) {
         mSBThreadResult.append(message).append("onEventAsync: ").append(Thread.currentThread().getName()).append("\n");
-        Log.d(message, "onEventAsync: " + Thread.currentThread().getName() + "  time: "+System.currentTimeMillis());
+        Log.d(message, "onEventAsync: " + Thread.currentThread().getName() + "  time: " + System.currentTimeMillis());
         EventBus.getDefault().post(new LogEvent());
     }
 
@@ -171,7 +174,7 @@ public class EventBusActivity extends AppCompatActivity {
         }
     }
 
-    @Subscribe(priority = 1,threadMode = ThreadMode.POSTING)
+    @Subscribe(priority = 1, threadMode = ThreadMode.POSTING)
     public void onPriority1(PriorityEvent priorityEvent) {
         mSbPriority.append("收到消息 priority: " + 1 + "\n");
         mTvShowPriorityResult.setText(mSbPriority.toString());

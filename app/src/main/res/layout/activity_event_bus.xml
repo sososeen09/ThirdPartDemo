@@ -115,12 +115,26 @@
             android:layout_height="wrap_content"
             android:text="粘性事件" />
 
-        <Button
-            android:id="@+id/btn_sendSticky"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Sticky启动Activity"
-            android:textAllCaps="false" />
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_sendSticky"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sticky启动Activity"
+                android:textAllCaps="false" />
+
+            <Button
+                android:id="@+id/btn_stickyMemory"
+                android:layout_width="wrap_content"
+                android:textAllCaps="false"
+                android:text="内存中最后一个sticky事件"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
 
         <View
             android:layout_width="match_parent"
