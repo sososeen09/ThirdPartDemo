@@ -130,9 +130,9 @@
             <Button
                 android:id="@+id/btn_stickyMemory"
                 android:layout_width="wrap_content"
-                android:textAllCaps="false"
+                android:layout_height="wrap_content"
                 android:text="内存中最后一个sticky事件"
-                android:layout_height="wrap_content" />
+                android:textAllCaps="false" />
 
         </LinearLayout>
 
@@ -173,5 +173,13 @@
             android:layout_height="wrap_content"
             android:textColor="#f00"
             tools:text="优先级结果" />
+
+        <Button
+            android:id="@+id/btn_frag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="测试Fragment" />
     </LinearLayout>
+
+
 </ScrollView>

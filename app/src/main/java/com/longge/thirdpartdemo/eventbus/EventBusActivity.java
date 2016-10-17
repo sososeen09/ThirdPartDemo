@@ -75,7 +75,7 @@ public class EventBusActivity extends AppCompatActivity {
 
     @OnClick({R.id.btn_send, R.id.btn_startAct, R.id.btn_sendCustomEvent, R.id.btn_sendOnMainThread, R.id.btn_sendOnSonThread, R.id.btn_sendSticky
             , R.id.btn_sendPriority,
-            R.id.btn_sendPriorityWithCancel, R.id.btn_stickyMemory
+            R.id.btn_sendPriorityWithCancel, R.id.btn_stickyMemory, R.id.btn_frag
     })
     public void onClick(View view) {
         switch (view.getId()) {
@@ -114,6 +114,10 @@ public class EventBusActivity extends AppCompatActivity {
                 //高优先级打断低优先级消息传送
                 mSbPriority = new StringBuilder();
                 EventBus.getDefault().post(new PriorityEvent(1));
+                break;
+            case R.id.btn_frag:
+//                Fragment
+                IntentHelper.startAct(this, FragmentTestActivity.class);
                 break;
         }
     }
