@@ -26,7 +26,7 @@
 
         <!-- greenDao -->
         <activity
-            android:name=".GreenDaoActivity"
+            android:name=".greendao.GreenDaoActivity"
             android:label="GreenDao" />
         <activity android:name=".eventbus.StickyActivity" />
         <activity android:name=".eventbus.FragmentTestActivity"></activity>
