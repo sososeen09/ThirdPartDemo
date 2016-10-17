@@ -2,15 +2,19 @@ package com.longge.thirdpartdemo.greendao;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
+import org.greenrobot.greendao.annotation.Id;
+import org.greenrobot.greendao.annotation.Property;
 
 /**
  * Created by long on 2016/10/17.
  */
 
-@Entity
+@Entity(nameInDb = "user")
 public class User {
 
+    @Id
     private int id;
+    @Property(nameInDb = "name")
     private String name;
     private String sex;
     @Generated(hash = 1803096763)
