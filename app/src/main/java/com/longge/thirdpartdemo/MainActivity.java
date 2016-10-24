@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
+import com.longge.thirdpartdemo.dagger2.view.Dagger2Activity;
 import com.longge.thirdpartdemo.eventbus.EventBusActivity;
 import com.longge.thirdpartdemo.greendao.GreenDaoActivity;
 import com.longge.thirdpartdemo.util.IntentHelper;
@@ -30,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
     }
 
-    @OnClick({R.id.btn_eventBus, R.id.btn_greenDAO})
+    @OnClick({R.id.btn_eventBus, R.id.btn_greenDAO, R.id.btn_dagger2})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_eventBus:
@@ -38,6 +39,9 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.btn_greenDAO:
                 IntentHelper.startAct(this, GreenDaoActivity.class);
+                break;
+            case R.id.btn_dagger2:
+                IntentHelper.startAct(this, Dagger2Activity.class);
                 break;
         }
     }

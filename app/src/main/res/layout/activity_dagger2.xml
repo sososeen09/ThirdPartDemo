@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:tools="http://schemas.android.com/tools"
-              android:id="@+id/activity_main"
+              android:id="@+id/activity_dagger2"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical"
@@ -9,25 +9,27 @@
               android:paddingLeft="@dimen/activity_horizontal_margin"
               android:paddingRight="@dimen/activity_horizontal_margin"
               android:paddingTop="@dimen/activity_vertical_margin"
-              tools:context="com.longge.thirdpartdemo.MainActivity">
+              tools:context="com.longge.thirdpartdemo.dagger2.view.Dagger2Activity">
+
+    <TextView
+        android:id="@+id/tv_showName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="显示名字" />
 
     <Button
-        android:id="@+id/btn_eventBus"
+        android:id="@+id/btn_inject"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="EventBus"
+        android:text="inject"
         android:textAllCaps="false" />
 
     <Button
-        android:id="@+id/btn_greenDAO"
+        android:id="@+id/btn_module"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="greenDAO"
+        android:text="module_provide"
         android:textAllCaps="false" />
-    <Button
-        android:id="@+id/btn_dagger2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="dagger2"
-        android:textAllCaps="false" />
+
+
 </LinearLayout>

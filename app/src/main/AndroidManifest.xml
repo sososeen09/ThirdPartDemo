@@ -3,11 +3,11 @@
           package="com.longge.thirdpartdemo">
 
     <application
+        android:name=".App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:name=".App"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
             <intent-filter>
@@ -30,7 +30,8 @@
             android:name=".greendao.GreenDaoActivity"
             android:label="GreenDao" />
         <activity android:name=".eventbus.StickyActivity" />
-        <activity android:name=".eventbus.FragmentTestActivity"></activity>
+        <activity android:name=".eventbus.FragmentTestActivity" />
+        <activity android:name=".dagger2.view.Dagger2Activity"></activity>
     </application>
 
 </manifest>
