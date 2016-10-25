@@ -13,7 +13,7 @@ import javax.inject.Inject;
  */
 
 public class DaggerPresenter {
-    private final UserManager userManager;
+    private UserManager userManager;
     private IUserView iUserView;
 
 
@@ -21,8 +21,9 @@ public class DaggerPresenter {
     public DaggerPresenter(UserManager userManager) {
         Log.d("TAG", "DaggerPresenter: ");
         this.userManager = userManager;
-
     }
+
+
 
     public User getUser() {
         return userManager.getUser();
@@ -35,5 +36,6 @@ public class DaggerPresenter {
     public void setUserView(IUserView iUserView) {
         this.iUserView = iUserView;
     }
+
 
 }

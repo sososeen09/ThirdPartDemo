@@ -8,7 +8,7 @@ import dagger.Component;
  * Created by long on 2016/10/24.
  */
 
-@Component
+@Component()
 public interface InjectComponent {
     void inject(Dagger2Activity dagger2Activity);
 }

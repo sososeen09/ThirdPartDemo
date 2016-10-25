@@ -25,6 +25,8 @@ public class Dagger2Activity extends AppCompatActivity implements IUserView {
 
     @Inject
     DaggerPresenter mDaggerPresenter;
+
+
     @BindView(R.id.btn_inject)
     Button mBtnInject;
     @BindView(R.id.btn_module)
@@ -45,7 +47,7 @@ public class Dagger2Activity extends AppCompatActivity implements IUserView {
         mTvShowName.setText(name);
     }
 
-    @OnClick({R.id.btn_inject, R.id.btn_module})
+    @OnClick({R.id.btn_inject, R.id.btn_module, R.id.btn_qualifierA, R.id.btn_qualifierB})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_inject:
@@ -53,6 +55,12 @@ public class Dagger2Activity extends AppCompatActivity implements IUserView {
                 break;
             case R.id.btn_module:
                 initModuleInject();
+                break;
+            case R.id.btn_qualifierA:
+
+                break;
+            case R.id.btn_qualifierB:
+
                 break;
         }
     }

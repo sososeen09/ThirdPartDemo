@@ -4,6 +4,8 @@ import android.util.Log;
 
 import com.longge.thirdpartdemo.dagger2.model.UserManager;
 
+import javax.inject.Named;
+
 import dagger.Module;
 import dagger.Provides;
 
@@ -17,5 +19,11 @@ public class InjectModule {
     UserManager provideUserManager() {
         Log.d("TAG", "provideUserManager: ");
         return new UserManager("custom name SylRocky");
+    }
+
+
+    @Provides @Named("UserManagerNamed") UserManager provideUserManagerNamed() {
+        Log.d("TAG", "provideUserManagerNamed: ");
+        return new UserManager("QualifierNamed name sososeen09");
     }
 }
