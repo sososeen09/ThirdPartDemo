@@ -38,17 +38,17 @@
         android:orientation="horizontal">
 
         <Button
+            android:id="@+id/btn_qualifierNamed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="qualifierNamed"
+            android:textAllCaps="false" />
+
+        <Button
             android:id="@+id/btn_qualifierA"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="qualifierA"
-            android:textAllCaps="false" />
-
-        <Button
-            android:id="@+id/btn_qualifierB"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="qualifierB"
             android:textAllCaps="false" />
 
     </LinearLayout>

@@ -22,8 +22,19 @@ public class InjectModule {
     }
 
 
-    @Provides @Named("UserManagerNamed") UserManager provideUserManagerNamed() {
+    @Provides
+    @Named("UserManagerNamed")
+    UserManager provideUserManagerNamed() {
         Log.d("TAG", "provideUserManagerNamed: ");
         return new UserManager("QualifierNamed name sososeen09");
     }
+
+    @Provides
+    @QualifierA
+    UserManager provideUserManagerA() {
+        Log.d("TAG", "provideUserManagerNamed: ");
+        return new UserManager("QualifierA name sososeen09");
+    }
+
+
 }

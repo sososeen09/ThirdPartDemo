@@ -11,6 +11,8 @@ import com.longge.thirdpartdemo.dagger2.di.DaggerInjectComponent;
 import com.longge.thirdpartdemo.dagger2.di.DaggerModuleComponent;
 import com.longge.thirdpartdemo.dagger2.di.InjectModule;
 import com.longge.thirdpartdemo.dagger2.present.DaggerPresenter;
+import com.longge.thirdpartdemo.dagger2.present.DaggerPresenterNamed;
+import com.longge.thirdpartdemo.dagger2.present.DaggerPresenterQualifierA;
 
 import javax.inject.Inject;
 
@@ -26,6 +28,11 @@ public class Dagger2Activity extends AppCompatActivity implements IUserView {
     @Inject
     DaggerPresenter mDaggerPresenter;
 
+    @Inject
+    DaggerPresenterNamed mDaggerPresenterNamed;
+
+    @Inject
+    DaggerPresenterQualifierA mDaggerPresenterQualifierA;
 
     @BindView(R.id.btn_inject)
     Button mBtnInject;
@@ -37,8 +44,6 @@ public class Dagger2Activity extends AppCompatActivity implements IUserView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dagger2);
         ButterKnife.bind(this);
-
-
     }
 
 
@@ -47,7 +52,7 @@ public class Dagger2Activity extends AppCompatActivity implements IUserView {
         mTvShowName.setText(name);
     }
 
-    @OnClick({R.id.btn_inject, R.id.btn_module, R.id.btn_qualifierA, R.id.btn_qualifierB})
+    @OnClick({R.id.btn_inject, R.id.btn_module, R.id.btn_qualifierNamed, R.id.btn_qualifierA})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_inject:
@@ -56,11 +61,15 @@ public class Dagger2Activity extends AppCompatActivity implements IUserView {
             case R.id.btn_module:
                 initModuleInject();
                 break;
-            case R.id.btn_qualifierA:
-
+            case R.id.btn_qualifierNamed:
+                DaggerModuleComponent.builder().injectModule(new InjectModule()).build().inject(this);
+                mDaggerPresenterNamed.setUserView(this);
+                mDaggerPresenterNamed.getUserName();
                 break;
-            case R.id.btn_qualifierB:
-
+            case R.id.btn_qualifierA:
+                DaggerModuleComponent.builder().injectModule(new InjectModule()).build().inject(this);
+                mDaggerPresenterQualifierA.setUserView(this);
+                mDaggerPresenterQualifierA.getUserName();
                 break;
         }
     }
