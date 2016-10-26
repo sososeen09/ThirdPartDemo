@@ -2,6 +2,7 @@ package com.longge.dagger2.di;
 
 import com.longge.dagger2.Person;
 import com.longge.dagger2.User;
+import com.longge.dagger2.di.qualifier.PersonQualifier;
 
 import javax.inject.Named;
 
@@ -36,5 +37,11 @@ public class DataModule {
     @Named("female")
     Person providePersonFemale() {
         return new Person("妹子");
+    }
+
+    @Provides
+    @PersonQualifier
+    Person providePersonByQualifier() {
+        return new Person("qualifier sex");
     }
 }

@@ -38,4 +38,11 @@
         android:text="Get Person2"
         android:textAllCaps="false" />
 
+    <Button
+        android:id="@+id/btn_showPerson3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Get PersonQualifier"
+        android:textAllCaps="false" />
+
 </LinearLayout>

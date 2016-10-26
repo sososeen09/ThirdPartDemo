@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.longge.dagger2.di.DaggerPersonComponent;
 import com.longge.dagger2.di.DataModule;
+import com.longge.dagger2.di.qualifier.PersonQualifier;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -36,6 +37,10 @@ public class ModuleActivity extends AppCompatActivity {
     @Named("female")
     Person mPersonFemale;
 
+    @Inject
+    @PersonQualifier
+    Person mPersonQualifier;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,8 +50,9 @@ public class ModuleActivity extends AppCompatActivity {
     }
 
 
-    @OnClick({R.id.tv_showUser, R.id.btn_showPerson, R.id.btn_showPerson1, R.id.btn_showPerson2})
+    @OnClick({R.id.tv_showUser, R.id.btn_showPerson, R.id.btn_showPerson1, R.id.btn_showPerson2, R.id.btn_showPerson3})
     public void onClick(View view) {
+
         switch (view.getId()) {
             case R.id.tv_showUser:
                 break;
@@ -58,6 +64,9 @@ public class ModuleActivity extends AppCompatActivity {
                 break;
             case R.id.btn_showPerson2:
                 mTvShowUser.setText(mPersonFemale.getSex());
+                break;
+            case R.id.btn_showPerson3:
+                mTvShowUser.setText(mPersonQualifier.getSex());
                 break;
         }
     }

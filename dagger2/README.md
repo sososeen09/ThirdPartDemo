@@ -12,4 +12,13 @@ Dagger2是从Squar公司接手的项目。是第一个一站式生成代码的�
 一些结论：
 
  - 在编译期有需要依赖的地方就要有提供依赖的地方，否则会报错。
- - 
+
+
+
+
+思路
+
+1. 纯粹的@Inject提供依赖
+2. 用@Module，@Provides提供依赖，需要@Component中采用modules把Module类加入。
+3. 用@Qualifier标识符@Named，同一个类，提供不同的对象。
+4. 自定义@Qualifier标识符。
