@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Dagger2</string>
+    <string name="show_name">Show Inject Name</string>
+    <string name="show_name_noinject">Show Name Without Inject</string>
 </resources>

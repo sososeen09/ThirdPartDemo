@@ -1,0 +1,34 @@
+# 都是套路——Dagger2没有想象的那么难
+##1 Dagger2——是什么
+Dagger2是从Squar公司接手的项目。是第一个一站式生成代码的依赖注入框架。通过注解生成的代码跟手写的一样简单，可以追踪并且保证了性能。
+
+使用Dagger2的好处：
+
+ - 充分的解耦。我需要使用你这个对象，但是我并不关心你这个实例是怎么生成的，我只管拿来用就好了。当你这个对象的创建过程变化的时候，我这个类基本不用动。
+ - 测试更加简单。可以模拟实例的生成来注入到需要依赖的地方。
+
+必须了解的一些注解：
+
+
+最简单的使用：
+有一个User类，在空参的构造
+	
+	```
+	public class User {
+	    public String name;
+	
+	    @Inject
+	    public User() {
+	        name = "sososeen09";
+	    }
+	
+	    public User(String name) {
+	        this.name = name;
+	    }
+	
+	    public String getName() {
+	        return name;
+	    }
+	}
+	
+	```
