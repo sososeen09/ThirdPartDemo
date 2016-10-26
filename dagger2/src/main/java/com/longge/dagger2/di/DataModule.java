@@ -27,6 +27,7 @@ public class DataModule {
 
     @Provides
     @Named("male")
+//采用@Qualifier注解，表示我可以提供这种标识符的Person
     Person providePersonMale() {
         return new Person("汉子");
     }

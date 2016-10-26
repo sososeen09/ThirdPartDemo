@@ -27,6 +27,7 @@ public class ModuleActivity extends AppCompatActivity {
     @Inject
     Person mPerson;
 
+    //这么多对象，如果需要特定的对象，用@Qualifier标识符注解，@Named是自定义的一个标识符注解
     @Inject
     @Named("male")
     Person mPersonMale;
