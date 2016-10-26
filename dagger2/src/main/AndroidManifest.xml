@@ -15,7 +15,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".OnlyInjectActivity"></activity>
+        <activity android:name=".OnlyInjectActivity" />
+        <activity android:name=".ModuleActivity"></activity>
     </application>
 
 </manifest>

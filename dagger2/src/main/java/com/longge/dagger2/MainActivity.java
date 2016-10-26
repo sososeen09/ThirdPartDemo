@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
                 IntentHelper.startAct(this, OnlyInjectActivity.class);
                 break;
             case R.id.btn_module:
+                IntentHelper.startAct(this, ModuleActivity.class);
                 break;
         }
     }
