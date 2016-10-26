@@ -6,6 +6,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.longge.dagger2.di.DaggerOnlyInjectComponent;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
@@ -43,6 +45,6 @@ public class OnlyInjectActivity extends AppCompatActivity {
     }
 
     private void initInject() {
-//        DaggerInjectComponent.builder().build().inject(this);
+        DaggerOnlyInjectComponent.builder().build().inject(this);
     }
 }

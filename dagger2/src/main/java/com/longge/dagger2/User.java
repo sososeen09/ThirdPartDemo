@@ -1,5 +1,7 @@
 package com.longge.dagger2;
 
+import javax.inject.Inject;
+
 /**
  * Created by suyunlong on 2016/10/26.
  */
@@ -7,7 +9,7 @@ package com.longge.dagger2;
 public class User {
     public String name;
     //用这个@Inject表示来表示我可以提供依赖，@Inject只能标记一个构造方法，否则不知道根据哪个构造创建实例。
-//    @Inject
+    @Inject
     public User() {
         name = "sososeen09";
     }

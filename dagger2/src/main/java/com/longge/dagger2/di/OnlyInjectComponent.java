@@ -10,7 +10,7 @@ import dagger.Component;
 
 //没有modules和dependencies的情况下，纯粹用@Inject来提供依赖
 @Component()
-public interface InjectComponent {
+public interface OnlyInjectComponent {
     //必须有个目标让Component知道需要往哪个类中注入
     void inject(OnlyInjectActivity onlyInjectActivity);
 }
