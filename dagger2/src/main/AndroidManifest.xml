@@ -21,7 +21,6 @@
         <activity android:name=".ui.PriorityTestActivity" />
         <activity android:name=".ui.SingletonTestActivity" />
         <activity android:name=".ui.DependenceTestActivity" />
-        <activity android:name=".ui.SubFragment"></activity>
     </application>
 
 </manifest>
