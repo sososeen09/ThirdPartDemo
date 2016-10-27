@@ -9,7 +9,7 @@
               android:paddingLeft="@dimen/activity_horizontal_margin"
               android:paddingRight="@dimen/activity_horizontal_margin"
               android:paddingTop="@dimen/activity_vertical_margin"
-              tools:context="com.longge.dagger2.OnlyInjectActivity">
+              tools:context="com.longge.dagger2.ui.OnlyInjectActivity">
 
     <TextView
         android:id="@+id/tv_showUser"

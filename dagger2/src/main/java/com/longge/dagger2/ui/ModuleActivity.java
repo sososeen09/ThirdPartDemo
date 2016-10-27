@@ -1,4 +1,4 @@
-package com.longge.dagger2;
+package com.longge.dagger2.ui;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -6,8 +6,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.longge.dagger2.di.DaggerPersonComponent;
-import com.longge.dagger2.di.DataModule;
+import com.longge.dagger2.R;
+import com.longge.dagger2.di.component.DaggerPersonComponent;
+import com.longge.dagger2.di.module.DataModule;
 import com.longge.dagger2.di.qualifier.PersonQualifier;
 import com.longge.dagger2.entity.Person;
 

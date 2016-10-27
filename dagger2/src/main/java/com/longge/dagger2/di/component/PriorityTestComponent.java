@@ -1,6 +1,7 @@
-package com.longge.dagger2.di;
+package com.longge.dagger2.di.component;
 
-import com.longge.dagger2.PriorityTestActivity;
+import com.longge.dagger2.di.module.DataModule;
+import com.longge.dagger2.ui.PriorityTestActivity;
 
 import dagger.Component;
 

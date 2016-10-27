@@ -3,22 +3,24 @@
           package="com.longge.dagger2">
 
     <application
+        android:name=".App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".OnlyInjectActivity" />
-        <activity android:name=".ModuleActivity" />
-        <activity android:name=".PriorityTestActivity" />
-        <activity android:name=".SingletonTestActivity"></activity>
+        <activity android:name=".ui.OnlyInjectActivity" />
+        <activity android:name=".ui.ModuleActivity" />
+        <activity android:name=".ui.PriorityTestActivity" />
+        <activity android:name=".ui.SingletonTestActivity" />
+        <activity android:name=".ui.DependenceTestActivity"></activity>
     </application>
 
 </manifest>

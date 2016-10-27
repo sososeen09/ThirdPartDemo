@@ -1,10 +1,11 @@
-package com.longge.dagger2;
+package com.longge.dagger2.ui;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
+import com.longge.dagger2.R;
 import com.longge.dagger2.util.IntentHelper;
 
 import butterknife.BindView;
@@ -25,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
     }
 
-    @OnClick({R.id.btn_inject, R.id.btn_module, R.id.btn_prorier, R.id.btn_singleton})
+    @OnClick({R.id.btn_inject, R.id.btn_module, R.id.btn_prorier, R.id.btn_singleton, R.id.btn_dependence})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_inject:
@@ -39,6 +40,9 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.btn_singleton:
                 IntentHelper.startAct(this, SingletonTestActivity.class);
+                break;
+            case R.id.btn_dependence:
+                IntentHelper.startAct(this, DependenceTestActivity.class);
                 break;
         }
     }

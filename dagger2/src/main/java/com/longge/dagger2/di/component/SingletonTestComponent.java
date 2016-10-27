@@ -1,7 +1,7 @@
-package com.longge.dagger2.di;
+package com.longge.dagger2.di.component;
 
-import com.longge.dagger2.SingletonTestActivity;
-import com.longge.dagger2.SingletonTestActivity1;
+import com.longge.dagger2.di.module.DataModule;
+import com.longge.dagger2.ui.SingletonTestActivity;
 
 import javax.inject.Singleton;
 
@@ -17,7 +17,6 @@ public abstract class SingletonTestComponent {
     //@Component不仅可以注解接口也可以注解抽象类，为了方便测试单例，把Component改为抽象类，实际开发中可以在Application中创建单例。
     public abstract void inject(SingletonTestActivity singletonTestActivity);
 
-    public abstract void inject(SingletonTestActivity1 singletonTestActivity1);
 
     private static SingletonTestComponent sComponent;
 

@@ -1,4 +1,4 @@
-package com.longge.dagger2;
+package com.longge.dagger2.ui;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -6,7 +6,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.longge.dagger2.di.DaggerOnlyInjectComponent;
+import com.longge.dagger2.R;
+import com.longge.dagger2.di.component.DaggerOnlyInjectComponent;
 import com.longge.dagger2.entity.User;
 
 import javax.inject.Inject;

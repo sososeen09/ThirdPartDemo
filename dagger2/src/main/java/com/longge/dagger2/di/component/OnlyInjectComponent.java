@@ -1,6 +1,6 @@
-package com.longge.dagger2.di;
+package com.longge.dagger2.di.component;
 
-import com.longge.dagger2.OnlyInjectActivity;
+import com.longge.dagger2.ui.OnlyInjectActivity;
 
 import dagger.Component;
 

@@ -1,4 +1,4 @@
-package com.longge.dagger2.di;
+package com.longge.dagger2.di.module;
 
 import com.longge.dagger2.entity.Person;
 import com.longge.dagger2.entity.PriorityTestEntity;

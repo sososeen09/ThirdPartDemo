@@ -1,11 +1,12 @@
-package com.longge.dagger2;
+package com.longge.dagger2.ui;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
 
-import com.longge.dagger2.di.SingletonTestComponent;
+import com.longge.dagger2.R;
+import com.longge.dagger2.di.component.SingletonTestComponent;
 import com.longge.dagger2.entity.SingletonTestEntity;
 import com.longge.dagger2.util.IntentHelper;
 
