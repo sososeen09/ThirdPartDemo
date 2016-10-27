@@ -32,3 +32,5 @@ Dagger2是从Squar公司接手的项目。是第一个一站式生成代码的�
 
 
 @Inject有缺陷，不能注解多个构造函数，(即便加上 @Qualifier也没用，因为 @Qualifier不能标识@Inject)也不能注解第三方的类（因为修改不了）。
+
+单例：如果在@Module中添加@Singleton，那么需要在对应的@Component中也加入@Singleton，否则会报错。

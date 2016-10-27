@@ -17,7 +17,8 @@
         </activity>
         <activity android:name=".OnlyInjectActivity" />
         <activity android:name=".ModuleActivity" />
-        <activity android:name=".PriorityTestActivity"></activity>
+        <activity android:name=".PriorityTestActivity" />
+        <activity android:name=".SingletonTestActivity"></activity>
     </application>
 
 </manifest>

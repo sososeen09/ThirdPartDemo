@@ -2,10 +2,12 @@ package com.longge.dagger2.di;
 
 import com.longge.dagger2.entity.Person;
 import com.longge.dagger2.entity.PriorityTestEntity;
+import com.longge.dagger2.entity.SingletonTestEntity;
 import com.longge.dagger2.entity.User;
 import com.longge.dagger2.di.qualifier.PersonQualifier;
 
 import javax.inject.Named;
+import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
@@ -49,5 +51,11 @@ public class DataModule {
     @Provides
     PriorityTestEntity providePriorityTestEntity() {
         return new PriorityTestEntity("我是module提供的对象");
+    }
+
+    @Provides
+    @Singleton
+    SingletonTestEntity provideSingletonTestEntity() {
+        return new SingletonTestEntity("测试单例");
     }
 }
