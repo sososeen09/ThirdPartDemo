@@ -6,8 +6,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.longge.dagger2.di.DaggerOnlyInjectComponent;
-import com.longge.dagger2.entity.User;
+import com.longge.dagger2.di.DaggerPriorityTestComponent;
+import com.longge.dagger2.entity.PriorityTestEntity;
 
 import javax.inject.Inject;
 
@@ -15,37 +15,37 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class OnlyInjectActivity extends AppCompatActivity {
-
-    @Inject //在目标类中@Inject标记表示我需要这个类型的依赖
-            User mUser;
+public class PriorityTestActivity extends AppCompatActivity {
 
     @BindView(R.id.tv_showUser)
     TextView mTvShowUser;
     @BindView(R.id.btn_showUser)
     Button mBtnShowUser;
 
+    @Inject
+    PriorityTestEntity mPriorityTestEntity;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_only_inject);
+        setContentView(R.layout.activity_prority);
         ButterKnife.bind(this);
-    }
-
-    @OnClick({R.id.btn_showUser})
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.btn_showUser:
-                initInject();
-                mTvShowUser.setText(mUser.getName());
-                break;
-            case R.id.btn_showUserNoInject:
-                mTvShowUser.setText(mUser.getName());
-                break;
-        }
+        initInject();
     }
 
     private void initInject() {
-        DaggerOnlyInjectComponent.builder().build().inject(this);
+//        DaggerPriorityTestComponent.builder().build().inject(this);
+        DaggerPriorityTestComponent.create().inject(this);
+    }
+
+    @OnClick({R.id.tv_showUser, R.id.btn_showUser})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.tv_showUser:
+                break;
+            case R.id.btn_showUser:
+                mTvShowUser.setText(mPriorityTestEntity.getName());
+                break;
+        }
     }
 }

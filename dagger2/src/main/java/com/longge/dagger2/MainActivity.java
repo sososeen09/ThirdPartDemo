@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
     }
 
-    @OnClick({R.id.btn_inject, R.id.btn_module})
+    @OnClick({R.id.btn_inject, R.id.btn_module, R.id.btn_prorier})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_inject:
@@ -33,6 +33,9 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.btn_module:
                 IntentHelper.startAct(this, ModuleActivity.class);
+                break;
+            case R.id.btn_prorier:
+                IntentHelper.startAct(this, PriorityTestActivity.class);
                 break;
         }
     }

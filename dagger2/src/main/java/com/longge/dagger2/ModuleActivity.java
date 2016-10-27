@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.longge.dagger2.di.DaggerPersonComponent;
 import com.longge.dagger2.di.DataModule;
 import com.longge.dagger2.di.qualifier.PersonQualifier;
+import com.longge.dagger2.entity.Person;
 
 import javax.inject.Inject;
 import javax.inject.Named;

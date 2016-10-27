@@ -22,3 +22,13 @@ Dagger2是从Squar公司接手的项目。是第一个一站式生成代码的�
 2. 用@Module，@Provides提供依赖，需要@Component中采用modules把Module类加入。
 3. 用@Qualifier标识符@Named，同一个类，提供不同的对象。
 4. 自定义@Qualifier标识符。
+
+
+# TODO
+0. @Module和@Inject优先级
+1. 自定义@Scope，单例
+2. @SubComponent
+3. 组织Component
+
+
+@Inject有缺陷，不能注解多个构造函数，(即便加上 @Qualifier也没用，因为 @Qualifier不能标识@Inject)也不能注解第三方的类（因为修改不了）。

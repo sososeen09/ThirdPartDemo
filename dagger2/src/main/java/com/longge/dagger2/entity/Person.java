@@ -1,4 +1,4 @@
-package com.longge.dagger2;
+package com.longge.dagger2.entity;
 
 /**
  * Created by suyunlong on 2016/10/26.

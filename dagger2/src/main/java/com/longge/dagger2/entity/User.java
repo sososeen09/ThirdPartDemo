@@ -1,4 +1,4 @@
-package com.longge.dagger2;
+package com.longge.dagger2.entity;
 
 import javax.inject.Inject;
 

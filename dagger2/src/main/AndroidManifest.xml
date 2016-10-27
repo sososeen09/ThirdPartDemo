@@ -16,7 +16,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".OnlyInjectActivity" />
-        <activity android:name=".ModuleActivity"></activity>
+        <activity android:name=".ModuleActivity" />
+        <activity android:name=".PriorityTestActivity"></activity>
     </application>
 
 </manifest>

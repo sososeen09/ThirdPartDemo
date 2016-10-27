@@ -1,7 +1,8 @@
 package com.longge.dagger2.di;
 
-import com.longge.dagger2.Person;
-import com.longge.dagger2.User;
+import com.longge.dagger2.entity.Person;
+import com.longge.dagger2.entity.PriorityTestEntity;
+import com.longge.dagger2.entity.User;
 import com.longge.dagger2.di.qualifier.PersonQualifier;
 
 import javax.inject.Named;
@@ -43,5 +44,10 @@ public class DataModule {
     @PersonQualifier
     Person providePersonByQualifier() {
         return new Person("qualifier sex");
+    }
+
+    @Provides
+    PriorityTestEntity providePriorityTestEntity() {
+        return new PriorityTestEntity("我是module提供的对象");
     }
 }
