@@ -1,5 +1,6 @@
 package com.longge.dagger2.di.component;
 
+import com.longge.dagger2.di.module.ActModule;
 import com.longge.dagger2.di.module.AppComponent;
 import com.longge.dagger2.di.scope.PerActivity;
 import com.longge.dagger2.ui.DependenceTestActivity;
@@ -12,8 +13,10 @@ import dagger.Component;
 
 @PerActivity
 //@Singleton
-@Component(dependencies = AppComponent.class)
+@Component(dependencies = AppComponent.class, modules = ActModule.class)
 public interface ActivityComponent {
 
     void inject(DependenceTestActivity DependenceTestActivity);
+
+    ActSubComponent getActSubComponent();
 }

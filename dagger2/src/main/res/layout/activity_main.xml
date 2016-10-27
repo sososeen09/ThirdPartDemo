@@ -41,9 +41,16 @@
         android:textAllCaps="false" />
 
     <Button
-        android:id="@+id/btn_dependence"
+        android:id="@+id/btn_dependence1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Component依赖"
+        android:text="Component依赖1"
+        android:textAllCaps="false" />
+
+    <Button
+        android:id="@+id/btn_dependence2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Component依赖2"
         android:textAllCaps="false" />
 </LinearLayout>
