@@ -18,6 +18,7 @@ public abstract class SingletonTestComponent {
     public abstract void inject(SingletonTestActivity singletonTestActivity);
 
 
+    //SingletonTestComponent必须是单例的，否则怎么能保证不同的Component对象提供同一个依赖实例呢？
     private static SingletonTestComponent sComponent;
 
     public static SingletonTestComponent getInstance() {
