@@ -44,6 +44,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.btn_dependence1:
                 IntentHelper.startAct(this, DependenceTestActivity.class);
                 break;
+            case R.id.btn_dependence2:
+                IntentHelper.startAct(this, SubComponentActivity.class);
+                break;
 
         }
     }
