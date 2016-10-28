@@ -1,7 +1,7 @@
 package com.longge.dagger2.di.component;
 
 import com.longge.dagger2.di.module.DataModule;
-import com.longge.dagger2.ui.ModuleActivity;
+import com.longge.dagger2.ui.ModuleTestActivity;
 
 import dagger.Component;
 
@@ -11,5 +11,5 @@ import dagger.Component;
 
 @Component(modules = DataModule.class)
 public interface PersonComponent {
-    void inject(ModuleActivity moduleActivity);
+    void inject(ModuleTestActivity moduleTestActivity);
 }

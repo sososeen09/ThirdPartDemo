@@ -19,7 +19,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class ModuleActivity extends AppCompatActivity {
+public class ModuleTestActivity extends AppCompatActivity {
 
 
     @BindView(R.id.tv_showUser)

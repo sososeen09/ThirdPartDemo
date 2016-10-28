@@ -3,7 +3,7 @@ package com.longge.dagger2.di.component;
 import com.longge.dagger2.di.module.ActModule;
 import com.longge.dagger2.di.scope.PerActivity;
 import com.longge.dagger2.ui.DependenceTestActivity;
-import com.longge.dagger2.ui.SubComponentActivity;
+import com.longge.dagger2.ui.SubComponentTestActivity;
 
 import dagger.Component;
 
@@ -18,7 +18,7 @@ public interface ActivityComponent {
 
     void inject(DependenceTestActivity DependenceTestActivity);
 
-    void inject(SubComponentActivity subComponentActivity);
+    void inject(SubComponentTestActivity subComponentTestActivity);
 
     //包含SubComponent,这样的话该SubComponent也可以拿到ActivityComponent中能提供的依赖。
     ActSubComponent getActSubComponent();

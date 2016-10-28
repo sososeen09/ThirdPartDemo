@@ -16,7 +16,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class OnlyInjectActivity extends AppCompatActivity {
+public class OnlyInjectTestActivity extends AppCompatActivity {
 
     @Inject //在目标类中@Inject标记表示我需要这个类型的依赖
             User mUser;

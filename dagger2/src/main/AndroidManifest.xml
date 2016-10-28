@@ -16,12 +16,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.OnlyInjectActivity" />
-        <activity android:name=".ui.ModuleActivity" />
+        <activity android:name=".ui.OnlyInjectTestActivity" />
+        <activity android:name=".ui.ModuleTestActivity" />
         <activity android:name=".ui.PriorityTestActivity" />
         <activity android:name=".ui.SingletonTestActivity" />
         <activity android:name=".ui.DependenceTestActivity" />
-        <activity android:name=".ui.SubComponentActivity"></activity>
+        <activity android:name=".ui.SubComponentTestActivity" />
+        <activity android:name=".ui.ExtendTestActivity"></activity>
     </application>
 
 </manifest>

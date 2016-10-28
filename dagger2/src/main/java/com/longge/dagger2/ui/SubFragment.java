@@ -48,7 +48,7 @@ public class SubFragment extends Fragment {
     }
 
     private void initInject() {
-        ((SubComponentActivity) getActivity()).getActivityComponent().getActSubComponent().inject(this);
+        ((SubComponentTestActivity) getActivity()).getActivityComponent().getActSubComponent().inject(this);
     }
 
     @OnClick(R.id.btn_showToast)

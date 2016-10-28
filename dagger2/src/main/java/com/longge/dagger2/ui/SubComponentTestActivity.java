@@ -11,7 +11,7 @@ import com.longge.dagger2.di.component.ActivityComponent;
 import com.longge.dagger2.di.component.DaggerActivityComponent;
 import com.longge.dagger2.di.module.ActModule;
 
-public class SubComponentActivity extends AppCompatActivity {
+public class SubComponentTestActivity extends AppCompatActivity {
 
     private ActivityComponent mActivityComponent;
 

@@ -1,6 +1,6 @@
 package com.longge.dagger2.di.component;
 
-import com.longge.dagger2.ui.OnlyInjectActivity;
+import com.longge.dagger2.ui.OnlyInjectTestActivity;
 
 import dagger.Component;
 
@@ -12,5 +12,5 @@ import dagger.Component;
 @Component()
 public interface OnlyInjectComponent {
     //必须有个目标让Component知道需要往哪个类中注入
-    void inject(OnlyInjectActivity onlyInjectActivity);
+    void inject(OnlyInjectTestActivity onlyInjectTestActivity);
 }
