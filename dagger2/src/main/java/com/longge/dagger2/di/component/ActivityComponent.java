@@ -1,7 +1,6 @@
 package com.longge.dagger2.di.component;
 
 import com.longge.dagger2.di.module.ActModule;
-import com.longge.dagger2.di.module.AppComponent;
 import com.longge.dagger2.di.scope.PerActivity;
 import com.longge.dagger2.ui.DependenceTestActivity;
 import com.longge.dagger2.ui.SubComponentActivity;
@@ -13,7 +12,7 @@ import dagger.Component;
  */
 
 @PerActivity
-//@Singleton
+//@Singleton //不能与依赖的AppComponent的作用域相同，否则会报错
 @Component(dependencies = AppComponent.class, modules = ActModule.class)
 public interface ActivityComponent {
 

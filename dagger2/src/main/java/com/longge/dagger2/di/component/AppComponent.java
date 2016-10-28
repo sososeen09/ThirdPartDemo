@@ -1,7 +1,8 @@
-package com.longge.dagger2.di.module;
+package com.longge.dagger2.di.component;
 
 import android.content.Context;
 
+import com.longge.dagger2.di.module.AppModule;
 import com.longge.dagger2.ui.MainActivity;
 
 import javax.inject.Singleton;

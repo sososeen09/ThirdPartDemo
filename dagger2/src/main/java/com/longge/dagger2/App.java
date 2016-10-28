@@ -2,9 +2,9 @@ package com.longge.dagger2;
 
 import android.app.Application;
 
-import com.longge.dagger2.di.module.AppComponent;
+import com.longge.dagger2.di.component.AppComponent;
+import com.longge.dagger2.di.component.DaggerAppComponent;
 import com.longge.dagger2.di.module.AppModule;
-import com.longge.dagger2.di.module.DaggerAppComponent;
 
 /**
  * Created by suyunlong on 2016/10/27.
