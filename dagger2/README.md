@@ -177,6 +177,25 @@ SubComponent
 
 # 问题
 1.为什么全局的ApplicationConponent要暴露给外界提供的单例对象，外界不能直接获取吗？
+不能，这是因为只有你暴露出返回这个类型的对象，对应的编译生成的DaggerApplicationComponent才有返回这个对象的方法。依赖它的Component如果需要提供这种类型的对象，那就能够调用DaggerApplicationComponent的这个方法。
+
+ 	//在ActivityComponent对应的Dagger中，ActivityComponent依赖AppComponent
+	private Provider<Context> contextProvider;
+	this.contextProvider =
+	        new Factory<Context>() {
+	          private final AppComponent appComponent = builder.appComponent;
+	
+	          @Override
+	          public Context get() {
+	            return Preconditions.checkNotNull(
+	                appComponent.context(), "Cannot return null from a non-@Nullable component method");
+	          }
+	        };
+	//在AppComponent对应的Dagger中
+	  @Override
+	  public Context context() {
+	    return getAppContextProvider.get();
+	  }
 
 2.为什么Component都要有一个inject方法？
 >对某些需要注入的成员添加@Inject注解的时候，Dagger2就会生成一个DaggerActivity_MembersInjector的东西，当调用inject(this)的时候，估计会把变量赋值。（需要研究源码了）
