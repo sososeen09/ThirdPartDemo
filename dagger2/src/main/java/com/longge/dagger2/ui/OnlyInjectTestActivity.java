@@ -48,5 +48,7 @@ public class OnlyInjectTestActivity extends AppCompatActivity {
 
     private void initInject() {
         DaggerOnlyInjectComponent.builder().build().inject(this);
+//        也可以直接用create()方法
+//        DaggerOnlyInjectComponent.create().inject(this);
     }
 }
