@@ -13,6 +13,11 @@ import dagger.Component;
  */
 @Component()
 public interface OnlyInjectComponent {
-    //必须有个目标让Component知道需要往哪个类中注入
+    /**
+     * 必须有个目标让Component知道需要往哪个类中注入
+     * 这个方法名可以是其它的，但是推荐用inject
+     * 目标类OnlyInjectTestActivity必须精确，不能用父类
+     * 这是Dagger2的机制决定的
+     */
     void inject(OnlyInjectTestActivity onlyInjectTestActivity);
 }

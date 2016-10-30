@@ -75,5 +75,7 @@ public class ModuleTestActivity extends AppCompatActivity {
 
     private void initInject() {
         DaggerPersonComponent.builder().dataModule(new DataModule()).build().inject(this);
+        ////如果DataModule有一个无参构造方法
+//        DaggerPersonComponent.create().inject(this);
     }
 }

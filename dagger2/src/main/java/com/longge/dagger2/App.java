@@ -24,7 +24,7 @@ public class App extends Application {
     }
 
     public AppComponent getAppComponent() {
-        //想外界的依赖提供这个AppComponent
+        //向外界的依赖提供这个AppComponent
         return sAppComponent;
     }
 }
