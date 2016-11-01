@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.longge.dagger2.R;
-import com.longge.dagger2.di.component.SingletonTestComponent;
+import com.longge.dagger2.di.component.test.SingletonTestComponent;
 import com.longge.dagger2.entity.SingletonTestEntity;
 import com.longge.dagger2.util.IntentHelper;
 

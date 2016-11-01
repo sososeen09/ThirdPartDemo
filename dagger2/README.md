@@ -11,3 +11,9 @@
 	1. 依赖dependences
 	2. 采用@SubComponent
 	3. 继承Component
+
+#补充：
+2016/11/1 10:19:31 
+
+- Module中的provide方法含有参数
+- 在目标类中@Inject标注方法实现注入

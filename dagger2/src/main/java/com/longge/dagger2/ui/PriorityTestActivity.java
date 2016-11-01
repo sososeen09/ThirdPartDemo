@@ -7,7 +7,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.longge.dagger2.R;
-import com.longge.dagger2.di.component.DaggerPriorityTestComponent;
+import com.longge.dagger2.di.component.test.DaggerPriorityTestComponent;
 import com.longge.dagger2.entity.PriorityTestEntity;
 
 import javax.inject.Inject;

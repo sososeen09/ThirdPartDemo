@@ -7,7 +7,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.longge.dagger2.R;
-import com.longge.dagger2.di.component.DaggerPersonComponent;
+import com.longge.dagger2.di.component.test.DaggerPersonComponent;
 import com.longge.dagger2.di.module.DataModule;
 import com.longge.dagger2.di.qualifier.PersonQualifier;
 import com.longge.dagger2.entity.Person;

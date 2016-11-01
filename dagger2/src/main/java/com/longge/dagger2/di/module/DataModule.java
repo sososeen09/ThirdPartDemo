@@ -59,8 +59,4 @@ public class DataModule {
         return new SingletonTestEntity("测试单例");
     }
 
-//    @Provides
-//    TestEntity provideTestEntity() {
-//        return new TestEntity();
-//    }
 }

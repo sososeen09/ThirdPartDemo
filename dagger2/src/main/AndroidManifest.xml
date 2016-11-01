@@ -22,7 +22,8 @@
         <activity android:name=".ui.SingletonTestActivity" />
         <activity android:name=".ui.DependenceTestActivity" />
         <activity android:name=".ui.SubComponentTestActivity" />
-        <activity android:name=".ui.ExtendTestActivity"></activity>
+        <activity android:name=".ui.ExtendTestActivity" />
+        <activity android:name=".ui.MethodInjectTestActivity"></activity>
     </application>
 
 </manifest>

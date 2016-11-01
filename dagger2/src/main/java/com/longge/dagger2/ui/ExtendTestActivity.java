@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
 import com.longge.dagger2.R;
-import com.longge.dagger2.di.component.DaggerExtendTestComponent;
+import com.longge.dagger2.di.component.test.DaggerExtendTestComponent;
 import com.longge.dagger2.di.module.ActModule;
 import com.longge.dagger2.di.module.AppModule;
 import com.longge.dagger2.entity.ActEntity;

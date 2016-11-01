@@ -1,5 +1,6 @@
-package com.longge.dagger2.di.component;
+package com.longge.dagger2.di.component.test;
 
+import com.longge.dagger2.di.component.ActivityComponent;
 import com.longge.dagger2.di.module.ActModule;
 import com.longge.dagger2.di.module.AppModule;
 import com.longge.dagger2.ui.ExtendTestActivity;

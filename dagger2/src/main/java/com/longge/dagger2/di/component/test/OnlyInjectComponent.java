@@ -1,4 +1,4 @@
-package com.longge.dagger2.di.component;
+package com.longge.dagger2.di.component.test;
 
 import com.longge.dagger2.ui.OnlyInjectTestActivity;
 

@@ -7,7 +7,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.longge.dagger2.R;
-import com.longge.dagger2.di.component.DaggerOnlyInjectComponent;
+import com.longge.dagger2.di.component.test.DaggerOnlyInjectComponent;
 import com.longge.dagger2.entity.User;
 
 import javax.inject.Inject;
