@@ -18,6 +18,7 @@ public class MethodInjectTestActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_method_inject_test);
+        //调用inject(this)后，会接着调用下面的@Inject标注的方法
         DaggerMethodTestComponent.create().inject(this);
         Toast.makeText(this, testEntity2 == null ? "testEntity2==null" : testEntity2.desc, Toast.LENGTH_LONG).show();
 
