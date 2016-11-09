@@ -1,17 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:id="@+id/activity_main"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:paddingBottom="@dimen/activity_vertical_margin"
-                android:paddingLeft="@dimen/activity_horizontal_margin"
-                android:paddingRight="@dimen/activity_horizontal_margin"
-                android:paddingTop="@dimen/activity_vertical_margin"
-                tools:context="com.longge.okhttp34.MainActivity">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:id="@+id/activity_main"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:paddingBottom="@dimen/activity_vertical_margin"
+              android:paddingLeft="@dimen/activity_horizontal_margin"
+              android:paddingRight="@dimen/activity_horizontal_margin"
+              android:paddingTop="@dimen/activity_vertical_margin"
+              tools:context="com.longge.okhttp34.MainActivity">
 
-    <TextView
+    <Button
+        android:id="@+id/btn_get"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
-</RelativeLayout>
+        android:text="get"
+        android:textAllCaps="false" />
+
+    <Button
+        android:id="@+id/btn_post"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="post"
+        android:textAllCaps="false" />
+
+    <Button
+        android:id="@+id/btn_upload"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="upload"
+        android:textAllCaps="false" />
+
+    <Button
+        android:id="@+id/btn_download"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="download"
+        android:textAllCaps="false" />
+</LinearLayout>
