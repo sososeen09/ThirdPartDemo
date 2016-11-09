@@ -45,7 +45,7 @@
 	- HttpUrl baseUrl，这个是必须的
 	- 还有okhttp3.Call.Factory callFactory 注意这个callFactory基本指的就是OkHttpClient，因为OkHttpClient实现了这个Call.Factory接口。
 	- List<Converter.Factory> converterFactories 这个主要是指我们通过addConverterFactory()方法添加的Converter.Factory对象，如我们添加的GsonConverterFactory。
-	- List<CallAdapter.Factory> adapterFactories，这个主要指我们通过addCallAdapterFactory()方法添加的CallAdapter.Factory对象，如我们添加的RxJavaCallAdapterFactory。在Android中默认会添加一个ExecutorCallAdapterFactory
+	- List<CallAdapter.Factory> adapterFactories，这个主要指我们通过addCallAdapterFactory()方法添加的CallAdapter.Factory对象，如我们添加的RxJavaCallAdapterFactory。在Android中默认会添加一个ExecutorCallAdapterFactory。还有一个DefaultCallAdapterFactory，当callbackExecutor==null的时候会创建这个对象，但是基本上不太可能用得上。因为callbackExecutor==null的时候，Android平台会自动创建一个MainThreadExecutor。也就是下面所说的。
 	- Executor callbackExecutor，这个主要是指通过回调的onResponse和onFailed方法在哪个线程，可以自己添加。Retrofit默认实现的是platform.defaultCallbackExecutor()，而这个platform指的就是Android。我们可以查看这个返回的就是Android中的MainThreadExecutor，顾名思义就是主线程的执行者，它的execute方法是这样的最终执行的是**handler.post(Runnable r)**方法。ExecutorCallAdapterFactory的构造方法中默认传递的就是这个Executor（如果不人为指定就是MainThreadExecutor）。
 
 
@@ -121,13 +121,16 @@ Retrofit通过create(final Class<T> service)返回需要Class对应类型的接�
 	    };
 	  }
 
-当调用异步请求的时候是这样的，
+当调用异步请求Call.enqueue的时候，实际调用的就是ExecutorCallbackCall中的enqueue方法，是这样的，这个delegate实际上就就是OkHttpCall，而OkHttpCall是对OkHttp3中的Call进行了一层封装。这个callbackExecutor指的是MainThreadExecutor，那么可以看出最终执行的Runnable其实就相当于是调用了Handler.post(Runnable r)。在onResponse和 onFailure中均做了封装，把Retrofit的CallBack回调到主线程。
 
+	#ExecutorCallbackCall
 	 @Override public void enqueue(final Callback<T> callback) {
 	      if (callback == null) throw new NullPointerException("callback == null");
 	
 	      delegate.enqueue(new Callback<T>() {
 	        @Override public void onResponse(Call<T> call, final Response<T> response) {
+
+			//相当于是调用了Handler.post(Runnable r)。
 	          callbackExecutor.execute(new Runnable() {
 	            @Override public void run() {
 	              if (delegate.isCanceled()) {
