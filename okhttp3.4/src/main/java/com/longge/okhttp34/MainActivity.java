@@ -72,8 +72,9 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
+                long startTime = System.currentTimeMillis();
                 saveFile(response);
-
+                Log.d(TAG, "timeUsed: " + (System.currentTimeMillis() - startTime));
             }
         });
     }
