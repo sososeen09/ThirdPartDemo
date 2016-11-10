@@ -1,9 +1,12 @@
 package com.longge.okhttp34;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
@@ -77,6 +80,23 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG, "timeUsed: " + (System.currentTimeMillis() - startTime));
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.office:
+//                Toast.makeText(this, "menu", Toast.LENGTH_LONG).show();
+                startActivity(new Intent(this, OfficialRecipesActivity.class));
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void saveFile(Response response) {

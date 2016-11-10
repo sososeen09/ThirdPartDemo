@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/activity_main"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="@dimen/activity_vertical_margin"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/activity_vertical_margin"
+            tools:context=".OfficialRecipesActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.longge.okhttp34.FlowLayoutV2
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/btn_get_syn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="GET 同步"
+                android:textAllCaps="false" />
+
+            <Button
+                android:id="@+id/btn_get_asyn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="GET 异步"
+                android:textAllCaps="false" />
+
+            <Button
+                android:id="@+id/btn_access_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="GET 添加Header"
+                android:textAllCaps="false" />
+
+            <Button
+                android:id="@+id/btn_post_string"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="POST String"
+                android:textAllCaps="false" />
+
+            <Button
+                android:id="@+id/btn_post_stream"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="POST Streaming"
+                android:textAllCaps="false" />
+
+            <Button
+                android:id="@+id/btn_post_file"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Posting a File"
+                android:textAllCaps="false" />
+
+            <Button
+                android:id="@+id/btn_post_form_param"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Posting form parameters"
+                android:textAllCaps="false" />
+
+            <Button
+                android:id="@+id/btn_post_multpart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Posting a multipart request"
+                android:textAllCaps="false" />
+
+            <Button
+                android:id="@+id/btn_parse_json"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Parse a JSON Response With Gson"
+                android:textAllCaps="false" />
+
+            <Button
+                android:id="@+id/btn_response_cache"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Response Caching"
+                android:textAllCaps="false" />
+
+            <Button
+                android:id="@+id/btn_cancel_call"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Canceling a Call"
+                android:textAllCaps="false" />
+
+            <Button
+                android:id="@+id/btn_time_out"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Timeouts"
+                android:textAllCaps="false" />
+
+            <Button
+                android:id="@+id/btn_per_call_config"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Per-call Configuration"
+                android:textAllCaps="false" />
+
+            <Button
+                android:id="@+id/btn_handle_authen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Handling authentication"
+                android:textAllCaps="false" />
+        </com.longge.okhttp34.FlowLayoutV2>
+
+        <TextView
+            android:id="@+id/tv_showResult"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</ScrollView>
