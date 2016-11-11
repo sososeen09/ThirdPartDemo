@@ -307,6 +307,9 @@ public class OfficialRecipesActivity extends AppCompatActivity {
                 Cache cache = new Cache(cacheDirectory, cacheSize);
 
                 OkHttpClient client = new OkHttpClient.Builder()
+                        .connectTimeout(60, TimeUnit.SECONDS)
+                        .readTimeout(60, TimeUnit.SECONDS)
+                        .writeTimeout(60, TimeUnit.SECONDS)
                         .cache(cache)
                         .build();
 

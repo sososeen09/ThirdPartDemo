@@ -10,6 +10,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import com.longge.okhttp34.okhttputils.ProgressResponseBody;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -20,6 +22,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -33,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
     Button mBtnPost;
     @BindView(R.id.btn_upload)
     Button mBtnUpload;
-    @BindView(R.id.btn_download)
+    @BindView(R.id.btn_download_response)
     Button mBtnDownload;
     private OkHttpClient mOkHttpClient;
 
@@ -49,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         mOkHttpClient = new OkHttpClient.Builder().build();
     }
 
-    @OnClick({R.id.btn_get, R.id.btn_post, R.id.btn_upload, R.id.btn_download})
+    @OnClick({R.id.btn_get, R.id.btn_post, R.id.btn_upload, R.id.btn_download_response, R.id.btn_download_progress})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_get:
@@ -59,14 +62,55 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.btn_upload:
                 break;
-            case R.id.btn_download:
-                downloadSome();
+            case R.id.btn_download_response:
+                downloadOnResponse(downUrl);
+                break;
+            case R.id.btn_download_progress:
+                downloadOnProgress(downUrl);
                 break;
         }
     }
 
-    private void downloadSome() {
-        Request request = new Request.Builder().url("http://zhuangbi.idagou.com/i/2016-11-09-8f82d47b6f41da76fa253775fab506e3.jpg").build();
+    String downUrl = "http://zhuangbi.idagou.com/i/2016-11-09-8f82d47b6f41da76fa253775fab506e3.jpg";
+
+    final ProgressResponseBody.ProgressListener progressListener = new ProgressResponseBody.ProgressListener() {
+        @Override
+        public void update(long bytesRead, long contentLength, boolean done) {
+            System.out.println(bytesRead);
+            System.out.println(contentLength);
+            System.out.println(done);
+            System.out.format("%d%% done\n", (100 * bytesRead) / contentLength);
+        }
+    };
+
+    private void downloadOnProgress(String downUrl) {
+        OkHttpClient newOkHttpClient = mOkHttpClient.newBuilder().addNetworkInterceptor(new Interceptor() {
+            @Override
+            public Response intercept(Chain chain) throws IOException {
+                Response originalResponse = chain.proceed(chain.request());
+                return originalResponse.newBuilder().body(new ProgressResponseBody(originalResponse.body(), progressListener)).build();
+            }
+
+        }).build();
+        Request request = new Request.Builder().url(downUrl).build();
+        newOkHttpClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                //这个流如果你不读取的话其实一直是在管道中，所以想要做下载监听的话也可以在onResponse方法中去做。
+                String string = response.body().string();
+            }
+        });
+    }
+
+
+    private void downloadOnResponse(String url) {
+
+        Request request = new Request.Builder().url(url).build();
         mOkHttpClient.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
