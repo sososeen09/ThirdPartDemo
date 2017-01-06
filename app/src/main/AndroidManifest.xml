@@ -31,7 +31,8 @@
             android:label="GreenDao" />
         <activity android:name=".eventbus.StickyActivity" />
         <activity android:name=".eventbus.FragmentTestActivity" />
-        <activity android:name=".dagger2.view.Dagger2Activity"></activity>
+        <activity android:name=".dagger2.view.Dagger2Activity" />
+        <activity android:name=".websocket.WebSocketActivity"></activity>
     </application>
 
 </manifest>

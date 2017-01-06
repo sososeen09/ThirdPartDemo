@@ -1,1 +1,1 @@
-include ':app', ':dagger2', ':retrofit2', ':okhttp3.4'
+include ':app', ':dagger2', ':retrofit2', ':okhttp3.4', ':javalib'

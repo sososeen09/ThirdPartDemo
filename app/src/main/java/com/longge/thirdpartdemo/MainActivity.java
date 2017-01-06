@@ -10,6 +10,7 @@ import com.longge.thirdpartdemo.dagger2.view.Dagger2Activity;
 import com.longge.thirdpartdemo.eventbus.EventBusActivity;
 import com.longge.thirdpartdemo.greendao.GreenDaoActivity;
 import com.longge.thirdpartdemo.util.IntentHelper;
+import com.longge.thirdpartdemo.websocket.WebSocketActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
     }
 
-    @OnClick({R.id.btn_eventBus, R.id.btn_greenDAO, R.id.btn_dagger2})
+    @OnClick({R.id.btn_eventBus, R.id.btn_greenDAO, R.id.btn_dagger2, R.id.btn_webSocket})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_eventBus:
@@ -42,6 +43,9 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.btn_dagger2:
                 IntentHelper.startAct(this, Dagger2Activity.class);
+                break;
+            case R.id.btn_webSocket:
+                IntentHelper.startAct(this, WebSocketActivity.class);
                 break;
         }
     }

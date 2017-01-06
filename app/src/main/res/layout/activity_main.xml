@@ -24,10 +24,18 @@
         android:layout_height="wrap_content"
         android:text="greenDAO"
         android:textAllCaps="false" />
+
     <Button
         android:id="@+id/btn_dagger2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="dagger2"
+        android:textAllCaps="false" />
+
+    <Button
+        android:id="@+id/btn_webSocket"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="webSocket"
         android:textAllCaps="false" />
 </LinearLayout>
