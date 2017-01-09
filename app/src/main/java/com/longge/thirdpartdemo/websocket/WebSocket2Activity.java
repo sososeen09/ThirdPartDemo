@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.longge.thirdpartdemo.R;
 import com.longge.thirdpartdemo.websocket.bean.ConnectResBean;
@@ -25,6 +26,10 @@ public class WebSocket2Activity extends AppCompatActivity {
     Button mBtnDisConnect;
     @BindView(R.id.btn_leave)
     Button mBtnLeave;
+    @BindView(R.id.et_sendContent)
+    EditText mEtSendContent;
+    @BindView(R.id.btn_send)
+    Button mBtnSend;
 
     private WebSocketHelper.WebSocketListener mConnectListener = new WebSocketHelper.WebSocketListener<ConnectResBean>() {
 
@@ -84,7 +89,7 @@ public class WebSocket2Activity extends AppCompatActivity {
         WebSocketHelper.getInstance().removeWebSocketListener(RequestType.WCST_LEAVE, mLeaveListener);
     }
 
-    @OnClick({R.id.btn_connect, R.id.btn_enter, R.id.btn_disConnect, R.id.btn_leave})
+    @OnClick({R.id.btn_connect, R.id.btn_enter, R.id.btn_disConnect, R.id.btn_leave, R.id.btn_send})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_connect:
@@ -99,7 +104,14 @@ public class WebSocket2Activity extends AppCompatActivity {
             case R.id.btn_leave:
                 leave();
                 break;
+            case R.id.btn_send:
+                send(mEtSendContent.getText().toString());
+                break;
         }
+    }
+
+    private void send(String content) {
+        WebSocketHelper.getInstance().send("1", "1", content);
     }
 
     private void disConnect() {
@@ -117,4 +129,5 @@ public class WebSocket2Activity extends AppCompatActivity {
     private void connect() {
         WebSocketHelper.getInstance().connect("1", "9f98a7bb-aa81-4315-ad4d-f8fdde89f5b0", "");
     }
+
 }

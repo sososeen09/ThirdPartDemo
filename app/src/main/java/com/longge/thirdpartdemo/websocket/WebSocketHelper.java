@@ -7,10 +7,12 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.longge.thirdpartdemo.websocket.bean.ChatBean;
 import com.longge.thirdpartdemo.websocket.bean.ConnectReqBean;
 import com.longge.thirdpartdemo.websocket.bean.ConnectResBean;
 import com.longge.thirdpartdemo.websocket.bean.EmptyBean;
 import com.longge.thirdpartdemo.websocket.bean.EnterLeaveReqBean;
+import com.longge.thirdpartdemo.websocket.bean.NewAudienceBean;
 import com.longge.thirdpartdemo.websocket.bean.Request;
 import com.longge.thirdpartdemo.websocket.bean.Response;
 import com.neovisionaries.ws.client.WebSocket;
@@ -119,29 +121,48 @@ public class WebSocketHelper {
             type = new TypeToken<Response<ConnectResBean>>() {
             }.getType();
             Response<ConnectResBean> fromJson = gson.fromJson(text, type);
-            for (WebSocketListener webSocketListener : mHashMap.get(RequestType.CONNECT)) {
-                webSocketListener.onResponse(fromJson);
-            }
+            callbackCall(RequestType.CONNECT, fromJson);
         } else if (text.contains(RequestType.WCST_ENTER.getRequestType())) {
             //进入直播间
             type = new TypeToken<Response<EmptyBean>>() {
             }.getType();
 
             Response<EmptyBean> fromJson = gson.fromJson(text, type);
-            for (WebSocketListener webSocketListener : mHashMap.get(RequestType.WCST_ENTER)) {
-                webSocketListener.onResponse(fromJson);
-            }
+            callbackCall(RequestType.WCST_ENTER, fromJson);
         } else if (text.contains(RequestType.WCST_LEAVE.getRequestType())) {
             //离开直播间
             type = new TypeToken<Response<String>>() {
             }.getType();
 
             Response<String> fromJson = gson.fromJson(text, type);
-            for (WebSocketListener webSocketListener : mHashMap.get(RequestType.WCST_LEAVE)) {
+            callbackCall(RequestType.WCST_LEAVE, fromJson);
+        } else if (text.contains(RequestType.WCST_NEW_AUDIENCE.getRequestType())) {
+            //TODO 待测试 用户进入直播室通知
+            type = new TypeToken<Response<NewAudienceBean>>() {
+            }.getType();
+
+            Response<NewAudienceBean> fromJson = gson.fromJson(text, type);
+            callbackCall(RequestType.WCST_NEW_AUDIENCE, fromJson);
+        } else if (text.contains(RequestType.WCST_CHAT.getRequestType())) {
+            //TODO 发送互动消息
+            type = new TypeToken<Response<EmptyBean>>() {
+            }.getType();
+
+            Response<EmptyBean> fromJson = gson.fromJson(text, type);
+            callbackCall(RequestType.WCST_CHAT, fromJson);
+        }
+    }
+
+    private void callbackCall(RequestType requestType, Response fromJson) {
+        List<WebSocketListener> webSocketListeners = mHashMap.get(requestType);
+        if (webSocketListeners != null) {
+            for (WebSocketListener webSocketListener : webSocketListeners) {
                 webSocketListener.onResponse(fromJson);
             }
         }
+
     }
+
 
     public static WebSocketHelper getInstance() {
         if (sWebSocketHelper == null) {
@@ -233,16 +254,6 @@ public class WebSocketHelper {
         return gson.toJson(connectReqBeanRequest);
     }
 
-//    public void addWebSocketListener(WebSocketListener listener) {
-//
-//        if (!mSocketsList.contains(listener)) {
-//            mSocketsList.add(listener);
-//        }
-//
-//        else {
-//            throw new IllegalStateException("has added this WebSocketListener: " + listener.toString());
-//        }
-//    }
 
     public void addWebSocketListener(RequestType requestType, WebSocketListener listener) {
         List<WebSocketListener> listenerList = mHashMap.get(requestType);
@@ -257,15 +268,6 @@ public class WebSocketHelper {
 
     }
 
-//    public void removeWebSocketListener(WebSocketListener listener) {
-//        if (mSocketsList.contains(listener)) {
-//            mSocketsList.remove(listener);
-//        }
-
-//        else {
-//            throw new IllegalStateException("has not add this WebSocketListener: " + listener.toString());
-//        }
-//    }
 
     public void removeWebSocketListener(RequestType requestType, WebSocketListener listener) {
         List<WebSocketListener> listenerList = mHashMap.get(requestType);
@@ -315,6 +317,18 @@ public class WebSocketHelper {
                 "  },\n" +
                 "  \"id\":\"1\"\n" +
                 "}");
+    }
+
+    public void send(String id, String roomId, String content) {
+        ChatBean chatBean = new ChatBean();
+        chatBean.content = content;
+        chatBean.roomId = roomId;
+        Request<ChatBean> chatBeanRequest = new Request<>();
+        chatBeanRequest.id = id;
+        chatBeanRequest.type = RequestType.WCST_CHAT.getRequestType();
+        chatBeanRequest.payload = chatBean;
+
+        mSocket.sendText(new Gson().toJson(chatBeanRequest));
     }
 
 
