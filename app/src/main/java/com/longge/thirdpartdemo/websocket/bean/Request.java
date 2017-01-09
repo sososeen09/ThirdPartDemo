@@ -1,4 +1,4 @@
-package com.longge.thirdpartdemo.websocket;
+package com.longge.thirdpartdemo.websocket.bean;
 
 /**
  * Created by yunlong.su on 2017/1/9.
@@ -7,7 +7,7 @@ package com.longge.thirdpartdemo.websocket;
 public class Request<T> {
     public String id;
     public String type;
-    public T payLoad;
+    public T payload;
 
 
 //    public static class PayLoad {

@@ -7,6 +7,12 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.longge.thirdpartdemo.websocket.bean.ConnectReqBean;
+import com.longge.thirdpartdemo.websocket.bean.ConnectResBean;
+import com.longge.thirdpartdemo.websocket.bean.EnterReqBean;
+import com.longge.thirdpartdemo.websocket.bean.EnterResBean;
+import com.longge.thirdpartdemo.websocket.bean.Request;
+import com.longge.thirdpartdemo.websocket.bean.Response;
 import com.neovisionaries.ws.client.WebSocket;
 import com.neovisionaries.ws.client.WebSocketAdapter;
 import com.neovisionaries.ws.client.WebSocketException;
@@ -74,17 +80,24 @@ public class WebSocketHelper {
     };
 
     private void notifyObservable(String text) {
-
+        Gson gson = new Gson();
+        Type type = null;
         if (text.contains(RequestType.CONNECT.getRequestType())) {
             //连接返回结果
-//            Response<ConnectResBean> response = GsonTools.changeGsonToBean(text, Response.class);
-
-            Gson gson = new Gson();
-            Type type = new TypeToken<Response<ConnectResBean>>() {
+            type = new TypeToken<Response<ConnectResBean>>() {
             }.getType();
             Response<ConnectResBean> fromJson = gson.fromJson(text, type);
             for (WebSocketListener webSocketListener : mSocketsList) {
-                webSocketListener.onTextMessage(fromJson);
+                webSocketListener.onResponse(fromJson);
+            }
+        } else if (text.contains(RequestType.WCST_ENTER.getRequestType())) {
+            //进入直播间
+            type = new TypeToken<Response<EnterResBean>>() {
+            }.getType();
+
+            Response<EnterResBean> fromJson = gson.fromJson(text, type);
+            for (WebSocketListener webSocketListener : mSocketsList) {
+                webSocketListener.onResponse(fromJson);
             }
         }
     }
@@ -100,6 +113,27 @@ public class WebSocketHelper {
 
         return sWebSocketHelper;
     }
+
+
+    /**
+     * 进入直播间
+     */
+    public void enter(final String id, final String roomId) {
+        mExecutorService.execute(new Runnable() {
+            @Override
+            public void run() {
+                EnterReqBean enterReqBean = new EnterReqBean();
+                enterReqBean.roomId = roomId;
+                Request<EnterReqBean> enterReqBeanRequest = new Request<>();
+                enterReqBeanRequest.id = id;
+                enterReqBeanRequest.type = RequestType.WCST_ENTER.getRequestType();
+                enterReqBeanRequest.payload = enterReqBean;
+                String message = new Gson().toJson(enterReqBeanRequest);
+                mSocket.sendText(message);
+            }
+        });
+    }
+
 
     public void connect(final String id, final String token, final String preSid) {
         mExecutorService.execute(new Runnable() {
@@ -128,6 +162,7 @@ public class WebSocketHelper {
         Request<ConnectReqBean> connectReqBeanRequest = new Request<>();
         connectReqBeanRequest.id = id;
         connectReqBeanRequest.type = RequestType.CONNECT.getRequestType();
+        connectReqBeanRequest.payload = connectReqBean;
         Gson gson = new Gson();
         return gson.toJson(connectReqBeanRequest);
     }
@@ -149,9 +184,6 @@ public class WebSocketHelper {
         }
     }
 
-    public Executor defaultCallbackExecutor() {
-        return new MainThreadExecutor();
-    }
 
     public void sendPing(Long times) {
         if (mTimer == null) {
@@ -162,7 +194,7 @@ public class WebSocketHelper {
             public void run() {
                 Request<String> stringRequest = new Request<>();
                 stringRequest.type = RequestType.PING.getRequestType();
-                stringRequest.payLoad = "";
+                stringRequest.payload = "";
                 stringRequest.id = String.valueOf(System.currentTimeMillis());
                 mSocket.sendText(GsonTools.createGsonString(stringRequest));
                 Log.d(TAG, "run: sendPing");
@@ -180,7 +212,9 @@ public class WebSocketHelper {
     }
 
     interface WebSocketListener<T> {
-        void onTextMessage(Response<T> t);
+        void onResponse(Response<T> t);
+
+        void onFailed(int code, Throwable throwable);
     }
 }
 

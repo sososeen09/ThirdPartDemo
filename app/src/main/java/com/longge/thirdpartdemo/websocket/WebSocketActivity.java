@@ -66,8 +66,8 @@ public class WebSocketActivity extends AppCompatActivity {
             @Override
             public void onTextMessage(WebSocket websocket, String text) throws Exception {
                 super.onTextMessage(websocket, text);
-//                Log.d(TAG, "onTextMessage: " + text + "     Thread: " + Thread.currentThread().getName());
-                Log.d(TAG, "onTextMessage: " + text);
+//                Log.d(TAG, "onResponse: " + text + "     Thread: " + Thread.currentThread().getName());
+                Log.d(TAG, "onResponse: " + text);
                 mSB.append(text).append("\n");
                 runOnUiThread(new Runnable() {
                     @Override
