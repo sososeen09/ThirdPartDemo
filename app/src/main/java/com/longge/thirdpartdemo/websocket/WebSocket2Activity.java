@@ -51,6 +51,18 @@ public class WebSocket2Activity extends AppCompatActivity {
 
         }
     };
+    private WebSocketHelper.WebSocketListener mLeaveListener = new WebSocketHelper.WebSocketListener<String>() {
+
+        @Override
+        public void onResponse(Response<String> text) {
+            Log.d(TAG, "leave: " + text.toString());
+        }
+
+        @Override
+        public void onFailed(int code, Throwable throwable) {
+
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +71,7 @@ public class WebSocket2Activity extends AppCompatActivity {
         ButterKnife.bind(this);
         WebSocketHelper.getInstance().addWebSocketListener(RequestType.CONNECT, mConnectListener);
         WebSocketHelper.getInstance().addWebSocketListener(RequestType.WCST_ENTER, mEnterListener);
+        WebSocketHelper.getInstance().addWebSocketListener(RequestType.WCST_LEAVE, mLeaveListener);
 
     }
 
@@ -68,6 +81,7 @@ public class WebSocket2Activity extends AppCompatActivity {
         super.onDestroy();
         WebSocketHelper.getInstance().removeWebSocketListener(RequestType.CONNECT, mEnterListener);
         WebSocketHelper.getInstance().removeWebSocketListener(RequestType.WCST_ENTER, mConnectListener);
+        WebSocketHelper.getInstance().removeWebSocketListener(RequestType.WCST_LEAVE, mLeaveListener);
     }
 
     @OnClick({R.id.btn_connect, R.id.btn_enter, R.id.btn_disConnect, R.id.btn_leave})
@@ -80,11 +94,16 @@ public class WebSocket2Activity extends AppCompatActivity {
                 enter();
                 break;
             case R.id.btn_disConnect:
+                disConnect();
                 break;
             case R.id.btn_leave:
                 leave();
                 break;
         }
+    }
+
+    private void disConnect() {
+        WebSocketHelper.getInstance().disConnect("1");
     }
 
     private void leave() {

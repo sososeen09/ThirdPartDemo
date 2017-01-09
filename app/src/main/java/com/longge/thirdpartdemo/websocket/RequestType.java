@@ -7,6 +7,7 @@ package com.longge.thirdpartdemo.websocket;
 public enum RequestType {
 
     CONNECT("CONNECT"),//建立会话
+    DISCONNECT("DISCONNECT"),//取消会话
     WCST_ENTER("WCST_ENTER"),//进入直播间
     WCST_AUDIENCES("WCST_AUDIENCES"),//直播室观众
     WCST_LEAVE("WCST_LEAVE"),//离开直播间

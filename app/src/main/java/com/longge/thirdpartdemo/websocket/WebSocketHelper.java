@@ -11,7 +11,7 @@ import com.longge.thirdpartdemo.websocket.bean.ConnectReqBean;
 import com.longge.thirdpartdemo.websocket.bean.ConnectResBean;
 import com.longge.thirdpartdemo.websocket.bean.EnterLeaveReqBean;
 import com.longge.thirdpartdemo.websocket.bean.EnterResBean;
-import com.longge.thirdpartdemo.websocket.bean.PingBean;
+import com.longge.thirdpartdemo.websocket.bean.EmptyBean;
 import com.longge.thirdpartdemo.websocket.bean.Request;
 import com.longge.thirdpartdemo.websocket.bean.Response;
 import com.neovisionaries.ws.client.WebSocket;
@@ -130,6 +130,15 @@ public class WebSocketHelper {
 
             Response<EnterResBean> fromJson = gson.fromJson(text, type);
             for (WebSocketListener webSocketListener : mHashMap.get(RequestType.WCST_ENTER)) {
+                webSocketListener.onResponse(fromJson);
+            }
+        } else if (text.contains(RequestType.WCST_LEAVE.getRequestType())) {
+            //离开直播间
+            type = new TypeToken<Response<String>>() {
+            }.getType();
+
+            Response<String> fromJson = gson.fromJson(text, type);
+            for (WebSocketListener webSocketListener : mHashMap.get(RequestType.WCST_LEAVE)) {
                 webSocketListener.onResponse(fromJson);
             }
         }
@@ -276,10 +285,10 @@ public class WebSocketHelper {
         mTimer.schedule(new TimerTask() {
             @Override
             public void run() {
-                PingBean pingBean = new PingBean();
-                Request<PingBean> stringRequest = new Request<>();
+                EmptyBean emptyBean = new EmptyBean();
+                Request<EmptyBean> stringRequest = new Request<>();
                 stringRequest.type = RequestType.PING.getRequestType();
-                stringRequest.payload = pingBean;
+                stringRequest.payload = emptyBean;
                 stringRequest.id = String.valueOf(System.currentTimeMillis());
                 String gsonString = GsonTools.createGsonString(stringRequest);
                 mSocket.sendText(gsonString);
@@ -291,6 +300,22 @@ public class WebSocketHelper {
                 Log.d(TAG, "run: sendPing");
             }
         }, times, times);
+    }
+
+    public void disConnect(String id) {
+        EmptyBean emptyBean = new EmptyBean();
+        Request<EmptyBean> stringRequest = new Request<>();
+        stringRequest.type = RequestType.DISCONNECT.getRequestType();
+        stringRequest.payload = emptyBean;
+        stringRequest.id = id;
+        String gsonString = GsonTools.createGsonString(stringRequest);
+//        mSocket.sendText(gsonString);
+        mSocket.sendText("{\n" +
+                "  \"type\":\"DISCONNECT\",\n" +
+                "  \"payload\":{\n" +
+                "  },\n" +
+                "  \"id\":\"1\"\n" +
+                "}");
     }
 
 
