@@ -9,21 +9,25 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.longge.thirdpartdemo.websocket.bean.ConnectReqBean;
 import com.longge.thirdpartdemo.websocket.bean.ConnectResBean;
-import com.longge.thirdpartdemo.websocket.bean.EnterReqBean;
+import com.longge.thirdpartdemo.websocket.bean.EnterLeaveReqBean;
 import com.longge.thirdpartdemo.websocket.bean.EnterResBean;
+import com.longge.thirdpartdemo.websocket.bean.PingBean;
 import com.longge.thirdpartdemo.websocket.bean.Request;
 import com.longge.thirdpartdemo.websocket.bean.Response;
 import com.neovisionaries.ws.client.WebSocket;
 import com.neovisionaries.ws.client.WebSocketAdapter;
 import com.neovisionaries.ws.client.WebSocketException;
 import com.neovisionaries.ws.client.WebSocketFactory;
+import com.neovisionaries.ws.client.WebSocketFrame;
+import com.neovisionaries.ws.client.WebSocketState;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -55,14 +59,41 @@ public class WebSocketHelper {
             mSocket = new WebSocketFactory().createSocket(WEB_SOCKET_BASE);
             mSocket.addListener(new WebSocketAdapter() {
                 @Override
-                public void onTextMessage(WebSocket websocket, String text) throws Exception {
+                public void onTextMessage(WebSocket websocket, final String text) throws Exception {
                     super.onTextMessage(websocket, text);
+                    System.out.println("receive msg: " + text);
+//                    Message msg = Message.obtain();
+//                    msg.obj = text;
+//                    mHandler.sendMessage(msg);
 
-                    Message msg = Message.obtain();
-                    msg.obj = text;
-                    mHandler.sendMessage(msg);
+                    mHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            notifyObservable(text);
+                        }
+                    });
                 }
 
+                @Override
+                public void onDisconnected(WebSocket websocket, WebSocketFrame serverCloseFrame, WebSocketFrame clientCloseFrame, boolean
+                        closedByServer) throws Exception {
+                    super.onDisconnected(websocket, serverCloseFrame, clientCloseFrame, closedByServer);
+                    Log.d(TAG, "onDisconnected: closedByServer " + closedByServer);
+                    mTimer.cancel();
+                    mTimer = null;
+                }
+
+                @Override
+                public void onConnected(WebSocket websocket, Map<String, List<String>> headers) throws Exception {
+                    super.onConnected(websocket, headers);
+                    Log.d(TAG, "onConnected: ");
+                }
+
+                @Override
+                public void onStateChanged(WebSocket websocket, WebSocketState newState) throws Exception {
+                    super.onStateChanged(websocket, newState);
+                    Log.d(TAG, "onStateChanged: " + newState.name());
+                }
 
             });
         } catch (IOException e) {
@@ -122,16 +153,41 @@ public class WebSocketHelper {
         mExecutorService.execute(new Runnable() {
             @Override
             public void run() {
-                EnterReqBean enterReqBean = new EnterReqBean();
-                enterReqBean.roomId = roomId;
-                Request<EnterReqBean> enterReqBeanRequest = new Request<>();
+                EnterLeaveReqBean enterLeaveReqBean = new EnterLeaveReqBean();
+                enterLeaveReqBean.roomId = roomId;
+                Request<EnterLeaveReqBean> enterReqBeanRequest = new Request<>();
                 enterReqBeanRequest.id = id;
                 enterReqBeanRequest.type = RequestType.WCST_ENTER.getRequestType();
-                enterReqBeanRequest.payload = enterReqBean;
+                enterReqBeanRequest.payload = enterLeaveReqBean;
                 String message = new Gson().toJson(enterReqBeanRequest);
                 mSocket.sendText(message);
+//                mSocket.sendText("{\n" +
+//                        "    \"id\": \"2\",\n" +
+//                        "    \"payload\": {\n" +
+//                        "        \"roomId\": \"2\"\n" +
+//                        "    },\n" +
+//                        "    \"type\": \"WCST_ENTER\"\n" +
+//                        "}");
             }
         });
+    }
+
+    public void leave(String id, String roomId) {
+        EnterLeaveReqBean enterLeaveReqBean = new EnterLeaveReqBean();
+        enterLeaveReqBean.roomId = roomId;
+        Request<EnterLeaveReqBean> enterReqBeanRequest = new Request<>();
+        enterReqBeanRequest.id = id;
+        enterReqBeanRequest.type = RequestType.WCST_LEAVE.getRequestType();
+        enterReqBeanRequest.payload = enterLeaveReqBean;
+        String message = new Gson().toJson(enterReqBeanRequest);
+        mSocket.sendText(message);
+//        mSocket.sendText("{{\n" +
+//                "  \"type\":\"WCST_LEAVE\",\n" +
+//                "  \"payload\":{\n" +
+//                "    \"roomId\":\"1\"\n" +
+//                "  },\n" +
+//                "  \"id\":\"1\"\n" +
+//                "}");
     }
 
 
@@ -147,7 +203,7 @@ public class WebSocketHelper {
 
                 String session = createSession(id, token, preSid);
                 mSocket.sendText(session);
-                sendPing(30_000L);
+                sendPing(10_000L);
             }
         });
     }
@@ -171,17 +227,21 @@ public class WebSocketHelper {
 
         if (!mSocketsList.contains(listener)) {
             mSocketsList.add(listener);
-        } else {
-            throw new IllegalStateException("has added this WebSocketListener: " + listener.toString());
         }
+
+//        else {
+//            throw new IllegalStateException("has added this WebSocketListener: " + listener.toString());
+//        }
     }
 
     public void removeWebSocketListener(WebSocketListener listener) {
         if (mSocketsList.contains(listener)) {
             mSocketsList.remove(listener);
-        } else {
-            throw new IllegalStateException("has not add this WebSocketListener: " + listener.toString());
         }
+
+//        else {
+//            throw new IllegalStateException("has not add this WebSocketListener: " + listener.toString());
+//        }
     }
 
 
@@ -192,24 +252,23 @@ public class WebSocketHelper {
         mTimer.schedule(new TimerTask() {
             @Override
             public void run() {
-                Request<String> stringRequest = new Request<>();
+                PingBean pingBean = new PingBean();
+                Request<PingBean> stringRequest = new Request<>();
                 stringRequest.type = RequestType.PING.getRequestType();
-                stringRequest.payload = "";
+                stringRequest.payload = pingBean;
                 stringRequest.id = String.valueOf(System.currentTimeMillis());
-                mSocket.sendText(GsonTools.createGsonString(stringRequest));
+                String gsonString = GsonTools.createGsonString(stringRequest);
+                mSocket.sendText(gsonString);
+//                mSocket.sendText("{\n" +
+//                        "  \"type\":\"PING\",\n" +
+//                        "  \"payload\":{},\n" +
+//                        "  \"id\":\"1\"\n" +
+//                        "}");
                 Log.d(TAG, "run: sendPing");
             }
-        }, 0, times);
+        }, times, times);
     }
 
-    static class MainThreadExecutor implements Executor {
-        private final Handler handler = new Handler(Looper.getMainLooper());
-
-        @Override
-        public void execute(Runnable r) {
-            handler.post(r);
-        }
-    }
 
     interface WebSocketListener<T> {
         void onResponse(Response<T> t);

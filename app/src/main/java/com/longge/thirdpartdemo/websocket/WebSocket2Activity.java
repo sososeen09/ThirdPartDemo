@@ -57,7 +57,8 @@ public class WebSocket2Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web_socket2);
         ButterKnife.bind(this);
-        WebSocketHelper.getInstance().addWebSocketListener(mEnterListener);
+        WebSocketHelper.getInstance().addWebSocketListener(mConnectListener);
+//        WebSocketHelper.getInstance().addWebSocketListener(mEnterListener);
 
     }
 
@@ -66,6 +67,7 @@ public class WebSocket2Activity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         WebSocketHelper.getInstance().removeWebSocketListener(mEnterListener);
+//        WebSocketHelper.getInstance().removeWebSocketListener(mConnectListener);
     }
 
     @OnClick({R.id.btn_connect, R.id.btn_enter, R.id.btn_disConnect, R.id.btn_leave})
@@ -80,12 +82,17 @@ public class WebSocket2Activity extends AppCompatActivity {
             case R.id.btn_disConnect:
                 break;
             case R.id.btn_leave:
+                leave();
                 break;
         }
     }
 
+    private void leave() {
+        WebSocketHelper.getInstance().leave("1", "1");
+    }
+
     private void enter() {
-        WebSocketHelper.getInstance().enter("1", "1");
+        WebSocketHelper.getInstance().enter("2", "2");
     }
 
     private void connect() {
