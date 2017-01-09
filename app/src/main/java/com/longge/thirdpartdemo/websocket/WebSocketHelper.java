@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -41,7 +42,8 @@ public class WebSocketHelper {
     private WebSocket mSocket;
     private final String WEB_SOCKET_BASE = "ws://test.wpwebsocket.baidao.com";
 
-    private ArrayList<WebSocketListener> mSocketsList = new ArrayList<>();
+    //    private ArrayList<WebSocketListener> mSocketsList = new ArrayList<>();
+    private ConcurrentHashMap<RequestType, List<WebSocketListener>> mHashMap = new ConcurrentHashMap<>();
     private Handler mHandler = new Handler(Looper.getMainLooper()) {
         @Override
         public void handleMessage(Message msg) {
@@ -118,7 +120,7 @@ public class WebSocketHelper {
             type = new TypeToken<Response<ConnectResBean>>() {
             }.getType();
             Response<ConnectResBean> fromJson = gson.fromJson(text, type);
-            for (WebSocketListener webSocketListener : mSocketsList) {
+            for (WebSocketListener webSocketListener : mHashMap.get(RequestType.CONNECT)) {
                 webSocketListener.onResponse(fromJson);
             }
         } else if (text.contains(RequestType.WCST_ENTER.getRequestType())) {
@@ -127,7 +129,7 @@ public class WebSocketHelper {
             }.getType();
 
             Response<EnterResBean> fromJson = gson.fromJson(text, type);
-            for (WebSocketListener webSocketListener : mSocketsList) {
+            for (WebSocketListener webSocketListener : mHashMap.get(RequestType.WCST_ENTER)) {
                 webSocketListener.onResponse(fromJson);
             }
         }
@@ -223,25 +225,47 @@ public class WebSocketHelper {
         return gson.toJson(connectReqBeanRequest);
     }
 
-    public void addWebSocketListener(WebSocketListener listener) {
-
-        if (!mSocketsList.contains(listener)) {
-            mSocketsList.add(listener);
-        }
-
+//    public void addWebSocketListener(WebSocketListener listener) {
+//
+//        if (!mSocketsList.contains(listener)) {
+//            mSocketsList.add(listener);
+//        }
+//
 //        else {
 //            throw new IllegalStateException("has added this WebSocketListener: " + listener.toString());
 //        }
+//    }
+
+    public void addWebSocketListener(RequestType requestType, WebSocketListener listener) {
+        List<WebSocketListener> listenerList = mHashMap.get(requestType);
+        if (listenerList == null) {
+            listenerList = new ArrayList<>();
+        }
+
+        if (!listenerList.contains(listener)) {
+            listenerList.add(listener);
+        }
+        mHashMap.put(requestType, listenerList);
+
     }
 
-    public void removeWebSocketListener(WebSocketListener listener) {
-        if (mSocketsList.contains(listener)) {
-            mSocketsList.remove(listener);
-        }
+//    public void removeWebSocketListener(WebSocketListener listener) {
+//        if (mSocketsList.contains(listener)) {
+//            mSocketsList.remove(listener);
+//        }
 
 //        else {
 //            throw new IllegalStateException("has not add this WebSocketListener: " + listener.toString());
 //        }
+//    }
+
+    public void removeWebSocketListener(RequestType requestType, WebSocketListener listener) {
+        List<WebSocketListener> listenerList = mHashMap.get(requestType);
+
+
+        if (listenerList != null && listenerList.contains(listener)) {
+            listenerList.remove(listener);
+        }
     }
 
 
