@@ -69,6 +69,43 @@ public class WebSocket2Activity extends AppCompatActivity {
         }
     };
 
+    private WebSocketHelper.WebSocketListener mAudienceListener = new WebSocketHelper.WebSocketListener<String>() {
+
+        @Override
+        public void onResponse(Response<String> text) {
+            Log.d(TAG, "audience: " + text.toString());
+        }
+
+        @Override
+        public void onFailed(int code, Throwable throwable) {
+
+        }
+    };
+    private WebSocketHelper.WebSocketListener mNewAudienceListener = new WebSocketHelper.WebSocketListener<String>() {
+
+        @Override
+        public void onResponse(Response<String> text) {
+            Log.d(TAG, "newAudience: " + text.toString());
+        }
+
+        @Override
+        public void onFailed(int code, Throwable throwable) {
+
+        }
+    };
+    private WebSocketHelper.WebSocketListener mMsgListener = new WebSocketHelper.WebSocketListener<String>() {
+
+        @Override
+        public void onResponse(Response<String> text) {
+            Log.d(TAG, "msg: " + text.toString());
+        }
+
+        @Override
+        public void onFailed(int code, Throwable throwable) {
+
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,6 +114,9 @@ public class WebSocket2Activity extends AppCompatActivity {
         WebSocketHelper.getInstance().addWebSocketListener(RequestType.CONNECT, mConnectListener);
         WebSocketHelper.getInstance().addWebSocketListener(RequestType.WCST_ENTER, mEnterListener);
         WebSocketHelper.getInstance().addWebSocketListener(RequestType.WCST_LEAVE, mLeaveListener);
+        WebSocketHelper.getInstance().addWebSocketListener(RequestType.WCST_AUDIENCES, mAudienceListener);
+        WebSocketHelper.getInstance().addWebSocketListener(RequestType.WCST_NEW_AUDIENCE, mNewAudienceListener);
+        WebSocketHelper.getInstance().addWebSocketListener(RequestType.WCST_MSG, mMsgListener);
 
     }
 
@@ -87,6 +127,9 @@ public class WebSocket2Activity extends AppCompatActivity {
         WebSocketHelper.getInstance().removeWebSocketListener(RequestType.CONNECT, mEnterListener);
         WebSocketHelper.getInstance().removeWebSocketListener(RequestType.WCST_ENTER, mConnectListener);
         WebSocketHelper.getInstance().removeWebSocketListener(RequestType.WCST_LEAVE, mLeaveListener);
+        WebSocketHelper.getInstance().removeWebSocketListener(RequestType.WCST_AUDIENCES, mAudienceListener);
+        WebSocketHelper.getInstance().removeWebSocketListener(RequestType.WCST_NEW_AUDIENCE, mNewAudienceListener);
+        WebSocketHelper.getInstance().removeWebSocketListener(RequestType.WCST_MSG, mMsgListener);
     }
 
     @OnClick({R.id.btn_connect, R.id.btn_enter, R.id.btn_disConnect, R.id.btn_leave, R.id.btn_send})
@@ -123,11 +166,12 @@ public class WebSocket2Activity extends AppCompatActivity {
     }
 
     private void enter() {
-        WebSocketHelper.getInstance().enter("2", "2");
+        WebSocketHelper.getInstance().enter("1", "1");
     }
 
     private void connect() {
-        WebSocketHelper.getInstance().connect("1", "9f98a7bb-aa81-4315-ad4d-f8fdde89f5b0", "");
+//        WebSocketHelper.getInstance().connect("1", "9f98a7bb-aa81-4315-ad4d-f8fdde89f5b0", "");
+        WebSocketHelper.getInstance().connect("1", "1", "");
     }
 
 }

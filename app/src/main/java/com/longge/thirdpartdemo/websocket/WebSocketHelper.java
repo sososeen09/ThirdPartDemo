@@ -7,11 +7,13 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.longge.thirdpartdemo.websocket.bean.AudienceCounterBean;
 import com.longge.thirdpartdemo.websocket.bean.ChatBean;
 import com.longge.thirdpartdemo.websocket.bean.ConnectReqBean;
 import com.longge.thirdpartdemo.websocket.bean.ConnectResBean;
 import com.longge.thirdpartdemo.websocket.bean.EmptyBean;
 import com.longge.thirdpartdemo.websocket.bean.EnterLeaveReqBean;
+import com.longge.thirdpartdemo.websocket.bean.MsgResBean;
 import com.longge.thirdpartdemo.websocket.bean.NewAudienceBean;
 import com.longge.thirdpartdemo.websocket.bean.Request;
 import com.longge.thirdpartdemo.websocket.bean.Response;
@@ -144,12 +146,26 @@ public class WebSocketHelper {
             Response<NewAudienceBean> fromJson = gson.fromJson(text, type);
             callbackCall(RequestType.WCST_NEW_AUDIENCE, fromJson);
         } else if (text.contains(RequestType.WCST_CHAT.getRequestType())) {
-            //TODO 发送互动消息
+            //TODO 发送互动消息结果
             type = new TypeToken<Response<EmptyBean>>() {
             }.getType();
 
             Response<EmptyBean> fromJson = gson.fromJson(text, type);
             callbackCall(RequestType.WCST_CHAT, fromJson);
+        } else if (text.contains(RequestType.WCST_MSG.getRequestType())) {
+            //TODO 直播室消息通知
+            type = new TypeToken<Response<MsgResBean>>() {
+            }.getType();
+
+            Response<MsgResBean> fromJson = gson.fromJson(text, type);
+            callbackCall(RequestType.WCST_MSG, fromJson);
+        } else if (text.contains(RequestType.WCST_AUDIENCES.getRequestType())) {
+            //TODO 直播室人数变更消息通知
+            type = new TypeToken<Response<AudienceCounterBean>>() {
+            }.getType();
+
+            Response<AudienceCounterBean> fromJson = gson.fromJson(text, type);
+            callbackCall(RequestType.WCST_AUDIENCES, fromJson);
         }
     }
 
@@ -203,15 +219,18 @@ public class WebSocketHelper {
         });
     }
 
-    public void leave(String id, String roomId) {
-        EnterLeaveReqBean enterLeaveReqBean = new EnterLeaveReqBean();
-        enterLeaveReqBean.roomId = roomId;
-        Request<EnterLeaveReqBean> enterReqBeanRequest = new Request<>();
-        enterReqBeanRequest.id = id;
-        enterReqBeanRequest.type = RequestType.WCST_LEAVE.getRequestType();
-        enterReqBeanRequest.payload = enterLeaveReqBean;
-        String message = new Gson().toJson(enterReqBeanRequest);
-        mSocket.sendText(message);
+    public void leave(final String id, final String roomId) {
+        mExecutorService.execute(new Runnable() {
+            @Override
+            public void run() {
+                EnterLeaveReqBean enterLeaveReqBean = new EnterLeaveReqBean();
+                enterLeaveReqBean.roomId = roomId;
+                Request<EnterLeaveReqBean> enterReqBeanRequest = new Request<>();
+                enterReqBeanRequest.id = id;
+                enterReqBeanRequest.type = RequestType.WCST_LEAVE.getRequestType();
+                enterReqBeanRequest.payload = enterLeaveReqBean;
+                String message = new Gson().toJson(enterReqBeanRequest);
+                mSocket.sendText(message);
 //        mSocket.sendText("{{\n" +
 //                "  \"type\":\"WCST_LEAVE\",\n" +
 //                "  \"payload\":{\n" +
@@ -219,6 +238,9 @@ public class WebSocketHelper {
 //                "  },\n" +
 //                "  \"id\":\"1\"\n" +
 //                "}");
+            }
+        });
+
     }
 
 
@@ -303,32 +325,44 @@ public class WebSocketHelper {
         }, times, times);
     }
 
-    public void disConnect(String id) {
-        EmptyBean emptyBean = new EmptyBean();
-        Request<EmptyBean> stringRequest = new Request<>();
-        stringRequest.type = RequestType.DISCONNECT.getRequestType();
-        stringRequest.payload = emptyBean;
-        stringRequest.id = id;
-        String gsonString = GsonTools.createGsonString(stringRequest);
+    public void disConnect(final String id) {
+        mExecutorService.execute(new Runnable() {
+            @Override
+            public void run() {
+                EmptyBean emptyBean = new EmptyBean();
+                Request<EmptyBean> stringRequest = new Request<>();
+                stringRequest.type = RequestType.DISCONNECT.getRequestType();
+                stringRequest.payload = emptyBean;
+                stringRequest.id = id;
+                String gsonString = GsonTools.createGsonString(stringRequest);
 //        mSocket.sendText(gsonString);
-        mSocket.sendText("{\n" +
-                "  \"type\":\"DISCONNECT\",\n" +
-                "  \"payload\":{\n" +
-                "  },\n" +
-                "  \"id\":\"1\"\n" +
-                "}");
+                mSocket.sendText("{\n" +
+                        "  \"type\":\"DISCONNECT\",\n" +
+                        "  \"payload\":{\n" +
+                        "  },\n" +
+                        "  \"id\":\"1\"\n" +
+                        "}");
+            }
+        });
+
     }
 
-    public void send(String id, String roomId, String content) {
-        ChatBean chatBean = new ChatBean();
-        chatBean.content = content;
-        chatBean.roomId = roomId;
-        Request<ChatBean> chatBeanRequest = new Request<>();
-        chatBeanRequest.id = id;
-        chatBeanRequest.type = RequestType.WCST_CHAT.getRequestType();
-        chatBeanRequest.payload = chatBean;
+    public void send(final String id, final String roomId, final String content) {
+        mExecutorService.execute(new Runnable() {
+            @Override
+            public void run() {
+                ChatBean chatBean = new ChatBean();
+                chatBean.content = content;
+                chatBean.roomId = roomId;
+                Request<ChatBean> chatBeanRequest = new Request<>();
+                chatBeanRequest.id = id;
+                chatBeanRequest.type = RequestType.WCST_CHAT.getRequestType();
+                chatBeanRequest.payload = chatBean;
 
-        mSocket.sendText(new Gson().toJson(chatBeanRequest));
+                mSocket.sendText(new Gson().toJson(chatBeanRequest));
+            }
+        });
+
     }
 
 
