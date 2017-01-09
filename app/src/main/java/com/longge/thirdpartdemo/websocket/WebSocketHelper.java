@@ -9,9 +9,8 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.longge.thirdpartdemo.websocket.bean.ConnectReqBean;
 import com.longge.thirdpartdemo.websocket.bean.ConnectResBean;
-import com.longge.thirdpartdemo.websocket.bean.EnterLeaveReqBean;
-import com.longge.thirdpartdemo.websocket.bean.EnterResBean;
 import com.longge.thirdpartdemo.websocket.bean.EmptyBean;
+import com.longge.thirdpartdemo.websocket.bean.EnterLeaveReqBean;
 import com.longge.thirdpartdemo.websocket.bean.Request;
 import com.longge.thirdpartdemo.websocket.bean.Response;
 import com.neovisionaries.ws.client.WebSocket;
@@ -125,10 +124,10 @@ public class WebSocketHelper {
             }
         } else if (text.contains(RequestType.WCST_ENTER.getRequestType())) {
             //进入直播间
-            type = new TypeToken<Response<EnterResBean>>() {
+            type = new TypeToken<Response<EmptyBean>>() {
             }.getType();
 
-            Response<EnterResBean> fromJson = gson.fromJson(text, type);
+            Response<EmptyBean> fromJson = gson.fromJson(text, type);
             for (WebSocketListener webSocketListener : mHashMap.get(RequestType.WCST_ENTER)) {
                 webSocketListener.onResponse(fromJson);
             }

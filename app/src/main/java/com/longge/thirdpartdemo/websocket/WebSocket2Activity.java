@@ -8,7 +8,7 @@ import android.widget.Button;
 
 import com.longge.thirdpartdemo.R;
 import com.longge.thirdpartdemo.websocket.bean.ConnectResBean;
-import com.longge.thirdpartdemo.websocket.bean.EnterResBean;
+import com.longge.thirdpartdemo.websocket.bean.EmptyBean;
 import com.longge.thirdpartdemo.websocket.bean.Response;
 
 import butterknife.BindView;
@@ -39,10 +39,10 @@ public class WebSocket2Activity extends AppCompatActivity {
         }
     };
 
-    private WebSocketHelper.WebSocketListener mEnterListener = new WebSocketHelper.WebSocketListener<EnterResBean>() {
+    private WebSocketHelper.WebSocketListener mEnterListener = new WebSocketHelper.WebSocketListener<EmptyBean>() {
 
         @Override
-        public void onResponse(Response<EnterResBean> text) {
+        public void onResponse(Response<EmptyBean> text) {
             Log.d(TAG, "enter: " + text.toString());
         }
 
