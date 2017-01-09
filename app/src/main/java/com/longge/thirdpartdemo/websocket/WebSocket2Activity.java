@@ -9,11 +9,11 @@ import com.longge.thirdpartdemo.R;
 public class WebSocket2Activity extends AppCompatActivity {
     private final String TAG = getClass().getSimpleName();
 
-    private WebSocketHelper.WebSocketListener mWebSocketListener1 = new WebSocketHelper.WebSocketListener() {
+    private WebSocketHelper.WebSocketListener mWebSocketListener1 = new WebSocketHelper.WebSocketListener<ConnectResBean>() {
 
         @Override
-        public void onTextMessage(String text) {
-            Log.d(TAG, "onTextMessage: " + text);
+        public void onTextMessage(Response<ConnectResBean> text) {
+            Log.d(TAG, "onTextMessage: " + text.toString());
         }
     };
 

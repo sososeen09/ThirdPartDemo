@@ -6,4 +6,11 @@ package com.longge.thirdpartdemo.websocket;
 
 public class ConnectResBean {
     public String sid;//会话id
+
+    @Override
+    public String toString() {
+        return "ConnectResBean{" +
+                "sid='" + sid + '\'' +
+                '}';
+    }
 }

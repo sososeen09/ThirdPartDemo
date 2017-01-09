@@ -3,15 +3,20 @@ package com.longge.thirdpartdemo.websocket;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.util.Log;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.neovisionaries.ws.client.WebSocket;
 import com.neovisionaries.ws.client.WebSocketAdapter;
 import com.neovisionaries.ws.client.WebSocketException;
 import com.neovisionaries.ws.client.WebSocketFactory;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -37,6 +42,7 @@ public class WebSocketHelper {
 //    private Executor mExecutor;
 
     ExecutorService mExecutorService = Executors.newFixedThreadPool(5);
+    private Timer mTimer;
 
     private WebSocketHelper() {
         try {
@@ -68,8 +74,18 @@ public class WebSocketHelper {
     };
 
     private void notifyObservable(String text) {
-        for (WebSocketListener webSocketListener : mSocketsList) {
-            webSocketListener.onTextMessage(text);
+
+        if (text.contains(RequestType.CONNECT.getRequestType())) {
+            //连接返回结果
+//            Response<ConnectResBean> response = GsonTools.changeGsonToBean(text, Response.class);
+
+            Gson gson = new Gson();
+            Type type = new TypeToken<Response<ConnectResBean>>() {
+            }.getType();
+            Response<ConnectResBean> fromJson = gson.fromJson(text, type);
+            for (WebSocketListener webSocketListener : mSocketsList) {
+                webSocketListener.onTextMessage(fromJson);
+            }
         }
     }
 
@@ -97,6 +113,7 @@ public class WebSocketHelper {
 
                 String session = createSession(id, token, preSid);
                 mSocket.sendText(session);
+                sendPing(30_000L);
             }
         });
     }
@@ -136,6 +153,23 @@ public class WebSocketHelper {
         return new MainThreadExecutor();
     }
 
+    public void sendPing(Long times) {
+        if (mTimer == null) {
+            mTimer = new Timer();
+        }
+        mTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                Request<String> stringRequest = new Request<>();
+                stringRequest.type = RequestType.PING.getRequestType();
+                stringRequest.payLoad = "";
+                stringRequest.id = String.valueOf(System.currentTimeMillis());
+                mSocket.sendText(GsonTools.createGsonString(stringRequest));
+                Log.d(TAG, "run: sendPing");
+            }
+        }, 0, times);
+    }
+
     static class MainThreadExecutor implements Executor {
         private final Handler handler = new Handler(Looper.getMainLooper());
 
@@ -145,8 +179,8 @@ public class WebSocketHelper {
         }
     }
 
-    interface WebSocketListener {
-        void onTextMessage(String text);
+    interface WebSocketListener<T> {
+        void onTextMessage(Response<T> t);
     }
 }
 

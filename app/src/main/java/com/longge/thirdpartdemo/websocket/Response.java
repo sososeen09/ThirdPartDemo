@@ -12,4 +12,15 @@ public class Response<T> {
     public String reqId; //请求id，如果是对客户端请求的响应，此值对应客户端请求的id
     public T payload; //携带参数
 
+    @Override
+    public String toString() {
+        return "Response{" +
+                "id='" + id + '\'' +
+                ", type='" + type + '\'' +
+                ", code=" + code +
+                ", msg='" + msg + '\'' +
+                ", reqId='" + reqId + '\'' +
+                ", payload=" + payload +
+                '}';
+    }
 }

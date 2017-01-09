@@ -11,7 +11,8 @@ public enum RequestType {
     WCST_AUDIENCES("WCST_AUDIENCES"),//直播室观众
     WCST_LEAVE("WCST_LEAVE"),//离开直播间
     WCST_CHAT("WCST_CHAT"),//聊天
-    WCST_MSG("WCST_MSG");//消息
+    WCST_MSG("WCST_MSG"),//消息
+    PING("PING");//PING
 
     private final String requestType;
 
