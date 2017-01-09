@@ -117,7 +117,6 @@ public class WebSocket2Activity extends AppCompatActivity {
         WebSocketHelper.getInstance().addWebSocketListener(RequestType.WCST_AUDIENCES, mAudienceListener);
         WebSocketHelper.getInstance().addWebSocketListener(RequestType.WCST_NEW_AUDIENCE, mNewAudienceListener);
         WebSocketHelper.getInstance().addWebSocketListener(RequestType.WCST_MSG, mMsgListener);
-
     }
 
 

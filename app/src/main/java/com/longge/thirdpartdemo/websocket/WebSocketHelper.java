@@ -7,6 +7,7 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.longge.thirdpartdemo.websocket.bean.AudienceBean;
 import com.longge.thirdpartdemo.websocket.bean.AudienceCounterBean;
 import com.longge.thirdpartdemo.websocket.bean.ChatBean;
 import com.longge.thirdpartdemo.websocket.bean.ConnectReqBean;
@@ -14,7 +15,6 @@ import com.longge.thirdpartdemo.websocket.bean.ConnectResBean;
 import com.longge.thirdpartdemo.websocket.bean.EmptyBean;
 import com.longge.thirdpartdemo.websocket.bean.EnterLeaveReqBean;
 import com.longge.thirdpartdemo.websocket.bean.MsgResBean;
-import com.longge.thirdpartdemo.websocket.bean.NewAudienceBean;
 import com.longge.thirdpartdemo.websocket.bean.Request;
 import com.longge.thirdpartdemo.websocket.bean.Response;
 import com.neovisionaries.ws.client.WebSocket;
@@ -118,48 +118,48 @@ public class WebSocketHelper {
     private void notifyObservable(String text) {
         Gson gson = new Gson();
         Type type = null;
-        if (text.contains(RequestType.CONNECT.getRequestType())) {
+        if (text.contains(RequestType.CONNECT.name())) {
             //连接返回结果
             type = new TypeToken<Response<ConnectResBean>>() {
             }.getType();
             Response<ConnectResBean> fromJson = gson.fromJson(text, type);
             callbackCall(RequestType.CONNECT, fromJson);
-        } else if (text.contains(RequestType.WCST_ENTER.getRequestType())) {
+        } else if (text.contains(RequestType.WCST_ENTER.name())) {
             //进入直播间
             type = new TypeToken<Response<EmptyBean>>() {
             }.getType();
 
             Response<EmptyBean> fromJson = gson.fromJson(text, type);
             callbackCall(RequestType.WCST_ENTER, fromJson);
-        } else if (text.contains(RequestType.WCST_LEAVE.getRequestType())) {
+        } else if (text.contains(RequestType.WCST_LEAVE.name())) {
             //离开直播间
             type = new TypeToken<Response<String>>() {
             }.getType();
 
             Response<String> fromJson = gson.fromJson(text, type);
             callbackCall(RequestType.WCST_LEAVE, fromJson);
-        } else if (text.contains(RequestType.WCST_NEW_AUDIENCE.getRequestType())) {
+        } else if (text.contains(RequestType.WCST_NEW_AUDIENCE.name())) {
             //TODO 待测试 用户进入直播室通知
-            type = new TypeToken<Response<NewAudienceBean>>() {
+            type = new TypeToken<Response<AudienceBean>>() {
             }.getType();
 
-            Response<NewAudienceBean> fromJson = gson.fromJson(text, type);
+            Response<AudienceBean> fromJson = gson.fromJson(text, type);
             callbackCall(RequestType.WCST_NEW_AUDIENCE, fromJson);
-        } else if (text.contains(RequestType.WCST_CHAT.getRequestType())) {
+        } else if (text.contains(RequestType.WCST_CHAT.name())) {
             //TODO 发送互动消息结果
             type = new TypeToken<Response<EmptyBean>>() {
             }.getType();
 
             Response<EmptyBean> fromJson = gson.fromJson(text, type);
             callbackCall(RequestType.WCST_CHAT, fromJson);
-        } else if (text.contains(RequestType.WCST_MSG.getRequestType())) {
+        } else if (text.contains(RequestType.WCST_MSG.name())) {
             //TODO 直播室消息通知
             type = new TypeToken<Response<MsgResBean>>() {
             }.getType();
 
             Response<MsgResBean> fromJson = gson.fromJson(text, type);
             callbackCall(RequestType.WCST_MSG, fromJson);
-        } else if (text.contains(RequestType.WCST_AUDIENCES.getRequestType())) {
+        } else if (text.contains(RequestType.WCST_AUDIENCES.name())) {
             //TODO 直播室人数变更消息通知
             type = new TypeToken<Response<AudienceCounterBean>>() {
             }.getType();
@@ -204,7 +204,7 @@ public class WebSocketHelper {
                 enterLeaveReqBean.roomId = roomId;
                 Request<EnterLeaveReqBean> enterReqBeanRequest = new Request<>();
                 enterReqBeanRequest.id = id;
-                enterReqBeanRequest.type = RequestType.WCST_ENTER.getRequestType();
+                enterReqBeanRequest.type = RequestType.WCST_ENTER.name();
                 enterReqBeanRequest.payload = enterLeaveReqBean;
                 String message = new Gson().toJson(enterReqBeanRequest);
                 mSocket.sendText(message);
@@ -227,7 +227,7 @@ public class WebSocketHelper {
                 enterLeaveReqBean.roomId = roomId;
                 Request<EnterLeaveReqBean> enterReqBeanRequest = new Request<>();
                 enterReqBeanRequest.id = id;
-                enterReqBeanRequest.type = RequestType.WCST_LEAVE.getRequestType();
+                enterReqBeanRequest.type = RequestType.WCST_LEAVE.name();
                 enterReqBeanRequest.payload = enterLeaveReqBean;
                 String message = new Gson().toJson(enterReqBeanRequest);
                 mSocket.sendText(message);
@@ -270,7 +270,7 @@ public class WebSocketHelper {
         connectReqBean.token = token;
         Request<ConnectReqBean> connectReqBeanRequest = new Request<>();
         connectReqBeanRequest.id = id;
-        connectReqBeanRequest.type = RequestType.CONNECT.getRequestType();
+        connectReqBeanRequest.type = RequestType.CONNECT.name();
         connectReqBeanRequest.payload = connectReqBean;
         Gson gson = new Gson();
         return gson.toJson(connectReqBeanRequest);
@@ -310,7 +310,7 @@ public class WebSocketHelper {
             public void run() {
                 EmptyBean emptyBean = new EmptyBean();
                 Request<EmptyBean> stringRequest = new Request<>();
-                stringRequest.type = RequestType.PING.getRequestType();
+                stringRequest.type = RequestType.PING.name();
                 stringRequest.payload = emptyBean;
                 stringRequest.id = String.valueOf(System.currentTimeMillis());
                 String gsonString = GsonTools.createGsonString(stringRequest);
@@ -331,7 +331,7 @@ public class WebSocketHelper {
             public void run() {
                 EmptyBean emptyBean = new EmptyBean();
                 Request<EmptyBean> stringRequest = new Request<>();
-                stringRequest.type = RequestType.DISCONNECT.getRequestType();
+                stringRequest.type = RequestType.DISCONNECT.name();
                 stringRequest.payload = emptyBean;
                 stringRequest.id = id;
                 String gsonString = GsonTools.createGsonString(stringRequest);
@@ -356,7 +356,7 @@ public class WebSocketHelper {
                 chatBean.roomId = roomId;
                 Request<ChatBean> chatBeanRequest = new Request<>();
                 chatBeanRequest.id = id;
-                chatBeanRequest.type = RequestType.WCST_CHAT.getRequestType();
+                chatBeanRequest.type = RequestType.WCST_CHAT.name();
                 chatBeanRequest.payload = chatBean;
 
                 mSocket.sendText(new Gson().toJson(chatBeanRequest));

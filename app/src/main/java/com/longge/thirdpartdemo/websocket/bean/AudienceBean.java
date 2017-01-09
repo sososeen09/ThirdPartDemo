@@ -5,7 +5,7 @@ package com.longge.thirdpartdemo.websocket.bean;
  * 新用户进入直播间
  */
 
-public class NewAudienceBean {
+public class AudienceBean {
     public String roomId;
     public String userId;
     public String avatar;
@@ -13,7 +13,7 @@ public class NewAudienceBean {
 
     @Override
     public String toString() {
-        return "NewAudienceBean{" +
+        return "AudienceBean{" +
                 "roomId='" + roomId + '\'' +
                 ", userId='" + userId + '\'' +
                 ", avatar='" + avatar + '\'' +
