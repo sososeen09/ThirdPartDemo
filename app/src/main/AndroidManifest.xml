@@ -32,7 +32,8 @@
         <activity android:name=".eventbus.StickyActivity" />
         <activity android:name=".eventbus.FragmentTestActivity" />
         <activity android:name=".dagger2.view.Dagger2Activity" />
-        <activity android:name=".websocket.WebSocketActivity"></activity>
+        <activity android:name=".websocket.WebSocketActivity" />
+        <activity android:name=".websocket.WebSocket2Activity"></activity>
     </application>
 
 </manifest>

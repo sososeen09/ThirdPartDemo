@@ -38,4 +38,11 @@
         android:layout_height="wrap_content"
         android:text="webSocket"
         android:textAllCaps="false" />
+
+    <Button
+        android:id="@+id/btn_webSocket2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="webSocket2"
+        android:textAllCaps="false" />
 </LinearLayout>
