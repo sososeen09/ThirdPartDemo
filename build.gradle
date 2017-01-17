@@ -13,6 +13,8 @@ buildscript {
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'// 使用butterknife
 
         classpath 'org.greenrobot:greendao-gradle-plugin:3.2.0'//greenDao
+
+        classpath ('com.tencent.tinker:tinker-patch-gradle-plugin:1.7.7')
     }
 }
 
