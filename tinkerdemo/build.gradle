@@ -12,9 +12,9 @@ dependencies {
     compile "com.android.support:multidex:1.0.1"
 
     //optional, help to generate the final application
-    provided('com.tencent.tinker:tinker-android-anno:1.7.7')
+    provided("com.tencent.tinker:tinker-android-anno:${TINKER_VERSION}") { changing = true }
     //tinker's main Android lib
-    compile('com.tencent.tinker:tinker-android-lib:1.7.7')
+    compile("com.tencent.tinker:tinker-android-lib:${TINKER_VERSION}") { changing = true }
 }
 
 

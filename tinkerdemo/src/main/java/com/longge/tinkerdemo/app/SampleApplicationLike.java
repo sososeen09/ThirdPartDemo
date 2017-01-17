@@ -3,6 +3,8 @@ package com.longge.tinkerdemo.app;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.AssetManager;
+import android.content.res.Resources;
 import android.support.multidex.MultiDex;
 
 import com.longge.tinkerdemo.Log.MyLogImp;
@@ -21,9 +23,11 @@ import com.tencent.tinker.loader.shareutil.ShareConstants;
         flags = ShareConstants.TINKER_ENABLE_ALL,
         loadVerifyFlag = false)
 public class SampleApplicationLike extends DefaultApplicationLike {
+
     public SampleApplicationLike(Application application, int tinkerFlags, boolean tinkerLoadVerifyFlag, long applicationStartElapsedTime, long
-            applicationStartMillisTime, Intent tinkerResultIntent) {
-        super(application, tinkerFlags, tinkerLoadVerifyFlag, applicationStartElapsedTime, applicationStartMillisTime, tinkerResultIntent);
+            applicationStartMillisTime, Intent tinkerResultIntent, Resources[] resources, ClassLoader[] classLoader, AssetManager[] assetManager) {
+        super(application, tinkerFlags, tinkerLoadVerifyFlag, applicationStartElapsedTime, applicationStartMillisTime, tinkerResultIntent,
+                resources, classLoader, assetManager);
     }
 
     @Override
