@@ -12,6 +12,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -78,6 +79,17 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 showInfo(MainActivity.this);
+            }
+        });
+
+
+        Button changeIcon = (Button) findViewById(R.id.changeIcon);
+        final ImageView ivIcon = (ImageView) findViewById(R.id.iv_icon);
+
+        changeIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ivIcon.setImageResource(R.drawable.shape_round_yellow);
             }
         });
 
