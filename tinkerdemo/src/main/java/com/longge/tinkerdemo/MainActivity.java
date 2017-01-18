@@ -93,6 +93,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        MainFragment mainFragment = new MainFragment();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fl_container, mainFragment).commit();
+
     }
 
     public boolean showInfo(Context context) {
@@ -139,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void showToast(View view) {
-        Toast.makeText(this, "I am patched", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "I am patched 2", Toast.LENGTH_SHORT).show();
     }
 
 
