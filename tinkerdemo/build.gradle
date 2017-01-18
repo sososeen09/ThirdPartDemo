@@ -125,14 +125,14 @@ def bakPath = file("${buildDir}/bakApk/")
 ext {
     //for some reason, you may want to ignore tinkerBuild, such as instant run debug build?
     tinkerEnabled = true
-
+    tinkerBaseApkPrefix="tinkerdemo-debug-0118-16-29-52"
     //for normal build
     //old apk file to build patch apk
-    tinkerOldApkPath = "${bakPath}/tinkerdemo-debug-0118-11-24-50.apk"
+    tinkerOldApkPath = "${bakPath}/${getBaseApkPrefix()}.apk"
     //proguard mapping file to build patch apk
     tinkerApplyMappingPath = "${bakPath}/app-debug-1018-17-32-47-mapping.txt"
     //resource R.txt to build patch apk, must input if there is resource changed
-    tinkerApplyResourcePath = "${bakPath}/tinkerdemo-debug-0118-09-38-14-R.txt"
+    tinkerApplyResourcePath = "${bakPath}/${getBaseApkPrefix()}-R.txt"
 
     //only use for build all flavor, if not, just ignore this field
     tinkerBuildFlavorDirectory = "${bakPath}/app-1018-17-32-47"
@@ -162,6 +162,9 @@ def getTinkerBuildFlavorDirectory() {
     return ext.tinkerBuildFlavorDirectory
 }
 
+def getBaseApkPrefix() {
+    return hasProperty("BASE_APK_PREFIX") ? BASE_APK_PREFIX : ext.tinkerBaseApkPrefix
+}
 
 if (buildWithTinker()) {
     apply plugin: 'com.tencent.tinker.patch'
@@ -189,7 +192,7 @@ if (buildWithTinker()) {
          *         it won't crash, but these changes can't effect. you may ignore it
          * case 5: resources.arsc has changed, but we don't use applyResourceMapping to build
          */
-        ignoreWarning = true
+        ignoreWarning = false
 
         /**
          * optional，default 'true'
