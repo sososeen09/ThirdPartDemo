@@ -89,13 +89,13 @@ public class MainActivity extends AppCompatActivity {
         changeIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                ivIcon.setImageResource(R.drawable.shape_round_yellow);
-                ivIcon.setImageResource(R.drawable.shape_round_red);
+                ivIcon.setImageResource(R.drawable.shape_round_yellow);
+//                ivIcon.setImageResource(R.drawable.shape_round_red);
             }
         });
 
-//        MainFragment mainFragment = new MainFragment();
-//        getSupportFragmentManager().beginTransaction().replace(R.id.fl_container, mainFragment).commit();
+        MainFragment mainFragment = new MainFragment();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fl_container, mainFragment).commit();
 
     }
 
@@ -143,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void showToast(View view) {
-        Toast.makeText(this, "I am original", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "I am patched", Toast.LENGTH_SHORT).show();
     }
 
 
