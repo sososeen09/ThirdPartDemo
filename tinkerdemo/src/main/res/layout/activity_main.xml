@@ -36,7 +36,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:visibility="gone"
         android:layout_below="@+id/loadPatch"
         android:text="load library"
         android:textAllCaps="false" />

@@ -126,7 +126,7 @@ ext {
     //for some reason, you may want to ignore tinkerBuild, such as instant run debug build?
     tinkerEnabled = true
 //    tinkerBaseApkPrefix="tinkerdemo-debug-0118-16-29-52"
-    tinkerBaseApkPrefix="tinkerdemo-debug-0120-16-47-35"
+    tinkerBaseApkPrefix="tinkerdemo-debug-0120-17-11-45"
     //for normal build
     //old apk file to build patch apk
     tinkerOldApkPath = "${bakPath}/${getBaseApkPrefix()}.apk"
