@@ -24,6 +24,8 @@ import com.tencent.tinker.lib.tinker.TinkerInstaller;
 import com.tencent.tinker.loader.shareutil.ShareConstants;
 import com.tencent.tinker.loader.shareutil.ShareTinkerInternals;
 
+import java.io.File;
+
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "TinkerDemo.MainActivity";
 
@@ -43,6 +45,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+        String patchLocation = Environment.getExternalStorageDirectory().getAbsolutePath() + "/patch_signed_7zip.apk";
+        File file = new File(patchLocation);
+        if (file.exists()) {
+            //存在
+            TinkerInstaller.onReceiveUpgradePatch(getApplicationContext(), patchLocation);
+        }
+
         Button loadLibraryButton = (Button) findViewById(R.id.loadLibrary);
 
         loadLibraryButton.setOnClickListener(new View.OnClickListener() {
@@ -55,6 +65,13 @@ public class MainActivity extends AppCompatActivity {
         });
 
         Button cleanPatchButton = (Button) findViewById(R.id.cleanPatch);
+
+        if (Tinker.with(getApplicationContext()).isTinkerLoaded()) {
+            //显示
+            cleanPatchButton.setVisibility(View.VISIBLE);
+        } else {
+            cleanPatchButton.setVisibility(View.GONE);
+        }
 
         cleanPatchButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -143,7 +160,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void showToast(View view) {
-        Toast.makeText(this, "I am original", Toast.LENGTH_SHORT).show();
+        showToast("I am original");
+    }
+
+    private void showToast(String text) {
+        Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
     }
 
 
