@@ -24,8 +24,6 @@ import com.tencent.tinker.lib.tinker.TinkerInstaller;
 import com.tencent.tinker.loader.shareutil.ShareConstants;
 import com.tencent.tinker.loader.shareutil.ShareTinkerInternals;
 
-import java.io.File;
-
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "TinkerDemo.MainActivity";
 
@@ -46,12 +44,12 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        String patchLocation = Environment.getExternalStorageDirectory().getAbsolutePath() + "/patch_signed_7zip.apk";
-        File file = new File(patchLocation);
-        if (file.exists()) {
-            //存在
-            TinkerInstaller.onReceiveUpgradePatch(getApplicationContext(), patchLocation);
-        }
+//        String patchLocation = Environment.getExternalStorageDirectory().getAbsolutePath() + "/patch_signed_7zip.apk";
+//        File file = new File(patchLocation);
+//        if (file.exists()) {
+//            //存在
+//            TinkerInstaller.onReceiveUpgradePatch(getApplicationContext(), patchLocation);
+//        }
 
         Button loadLibraryButton = (Button) findViewById(R.id.loadLibrary);
 
