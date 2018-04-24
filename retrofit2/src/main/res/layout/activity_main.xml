@@ -19,6 +19,20 @@
         android:textAllCaps="false" />
 
     <Button
+        android:id="@+id/btn_getRepo_rx"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="getRepoRx"
+        android:textAllCaps="false" />
+
+    <Button
+        android:id="@+id/btn_getRepo_rx2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="getRepoRx2"
+        android:textAllCaps="false" />
+
+    <Button
         android:id="@+id/btn_getHistory"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

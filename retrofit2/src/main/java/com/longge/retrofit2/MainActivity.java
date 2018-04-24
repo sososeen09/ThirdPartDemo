@@ -11,14 +11,20 @@ import com.longge.retrofit2.net.Api;
 import com.longge.retrofit2.net.Repo;
 import com.longge.retrofit2.net.TestApi;
 
+import org.reactivestreams.Subscription;
+
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.reactivex.FlowableSubscriber;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import rx.Observer;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,6 +33,9 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.btn_getHistory)
     Button mBtnGetHistory;
 
+    @BindView(R.id.btn_getRepo_rx)
+    Button mBtnGetRepoRx;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,11 +43,19 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
     }
 
-    @OnClick({R.id.btn_getRepo, R.id.btn_getHistory})
+    @OnClick({R.id.btn_getRepo, R.id.btn_getRepo_rx, R.id.btn_getRepo_rx2, R.id.btn_getHistory})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_getRepo:
                 getUserRepo("sososeen09");
+                break;
+
+            case R.id.btn_getRepo_rx:
+                getUserRepoRx("sososeen09");
+                break;
+
+            case R.id.btn_getRepo_rx2:
+                getUserRepoRx2("sososeen09");
                 break;
             case R.id.btn_getHistory:
                 getHistory(403, 1);
@@ -72,5 +89,52 @@ public class MainActivity extends AppCompatActivity {
                 if (BuildConfig.DEBUG) Log.d("TAG", "thread: " + Thread.currentThread().getName());
             }
         });
+    }
+
+    private void getUserRepoRx(String name) {
+        Api.getDefault().listReposRx(name).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<List<Repo>>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                    }
+
+                    @Override
+                    public void onNext(List<Repo> repos) {
+                        if (BuildConfig.DEBUG) Log.d("TAG", repos.toString());
+                    }
+                });
+    }
+    private void getUserRepoRx2(String name) {
+        Api.getDefault().listReposRx2(name).subscribeOn(io.reactivex.schedulers.Schedulers.io())
+                .observeOn(io.reactivex.android.schedulers.AndroidSchedulers.mainThread())
+                .subscribeOn(io.reactivex.android.schedulers.AndroidSchedulers.mainThread())
+                .subscribe(new FlowableSubscriber<List<Repo>>() {
+                    @Override
+                    public void onSubscribe(Subscription s) {
+
+                    }
+
+                    @Override
+                    public void onNext(List<Repo> repos) {
+                        if (BuildConfig.DEBUG) Log.d("TAG", repos.toString());
+                    }
+
+                    @Override
+                    public void onError(Throwable t) {
+                        t.printStackTrace();
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 }
